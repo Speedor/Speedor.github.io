@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>白柏翁</title>
+  <title>机器学习之神经网络 | 白柏翁</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -59,7 +59,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -145,119 +145,65 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2>YOU'VE MADE A <span>BRAVE</span> DECISION, WELCOME.</h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>每一个不曾起舞的日子都是对生命的辜负。</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-<!-- ============================ Content =========================== -->
-
+      
 <section id="intro">
     <div class="container">
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2017/03/02/机器学习之神经网络/">机器学习之神经网络</a></h3>
-                    <span>
-                        <span class="post-meta">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
       <time datetime="2017-03-02T09:36:52.000Z" itemprop="datePublished">
           2017-03-02
       </time>
     
 </span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p class="index-excerpt">
-                      
-                               总想写点儿什么却又不知道从哪写起，后来想了想还是从技术学习上说起吧，也算是对之前大学学习生活中的总结和认知的一个整理，因为不太喜欢把客观世界和主观意识分辨的太过于清晰，所以文章中自己的理解可能多一点儿，一是分享整理一下自己学习的知识，二是作为学习表达一下自己的观点，三是作为菜鸟的我认知可能还不到位，希望各位看官能提出宝贵的意见和建议。
+                <h1>机器学习之神经网络</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p>       总想写点儿什么却又不知道从哪写起，后来想了想还是从技术学习上说起吧，也算是对之前大学学习生活中的总结和认知的一个整理，因为不太喜欢把客观世界和主观意识分辨的太过于清晰，所以文章中自己的理解可能多一点儿，一是分享整理一下自己学习的知识，二是作为学习表达一下自己的观点，三是作为菜鸟的我认知可能还不到位，希望各位看官能提出宝贵的意见和建议。</p>
+<hr>
+<h3 id="生物学中的生物神经网络">生物学中的生物神经网络</h3>
+<p>       机器学习中神经网络是严格意义来讲应该是人工神经网络，在个人看来他是对生物学意义上大脑神经元的高度模拟，但是有关人类大脑的研究至今仍有很多未知，所以人工神经网络也算是他的一个演化（只是个人拙见）。不知道你还记不记得高中生物课本中讲到的神经细胞（又称神经元），什么？不记得......好吧，来听我捋捋，看看能不能唤醒你的沉睡的远古记忆。</p>
+<p>       神经元的结构如下:</p>
+<div class="figure">
+<img src="/images/shenjingyuan1.jpg">
 
-生物学中的生物神经网络
-       机器学习中神经网络是严格意义来讲应该是人工神经网
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2017/03/02/机器学习之神经网络/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
+</div>
+<p>       是不是有点儿印象？还没......好吧，@#<span class="math inline">\(^&amp;%!\)</span># ……*&amp;%￥&amp;<span class="citation">@34</span>%#!（唤醒咒语）</p>
+<p>       言归正传，一个神经元主要由树突和轴突组成（如上图），而多个神经元之间相互连接形成神经组织，神经组织又组成了我们的大脑。神经元和神经元之间的连接的目的是传递兴奋，其实本质上是不同神经元间树突和轴突的互相连接进行传递，是怎么连接传递兴奋的呢？对，就是轴突末梢的突触小体，突触小体产生突触小泡用来传递神经元间的神经递质，神经递质是连接神经元间的主要化学物质。上个神经元轴突与下个神经元树突之间的信号是以神经递质的形式传输，所以是传递化学信号，而在神经元神经细胞受到刺激后，细胞膜对离子的通透性会发生改变，导致膜内外产生电位差，进而产生电信号。明白了吧，嗨嗨嗨，醒醒了都，划重点了啊，化学信号和电信号的相互转变这个考试肯定考，少则5分，多则10分，balabala...... <img src="/images/tuchu.jpg"></p>
+<p>       还记不记得生物老师常说的神经元突触传递兴奋有两种情况：兴奋性和抑制性。兴奋在突触小体上进行电信号-化学信号的转变，通过在突触间担当的信使---神经递质进行传递，之后再在新的神经元中完成化学信号-电信号的转变，要完成电信号→化学信号→电信号的转换必须有完整的突触结构。现在有印象了吧，兴奋性和抑制性的不同之处在于释放的递质不同，一个是兴奋性递质产生神经兴奋，另一个是抑制性递质产生神经抑制。        ok，我们的生物学上的神经元远古记忆唤醒结束，不知道你唤醒了多少？好吧......反正我高中生物是化学老师教的︿(￣︶￣)︿。机器学习的神经网络讲生物有什么用？在个人看来理解生物学的神经机理对理解机器学习的人工神经网络有很大帮助，不管是从现在的原理上还是以后的数学计算理解上都会有很大好处。当然生物学这块不想看的话可以跳过往后看。</p>
+<p>       其实我们人类学习能力提升的本质就是复杂的神经网络中的众多神经元进行神经兴奋和神经抑制的迭代变换。为什么这么说呢？就拿背单词来说吧，abandon，abandon，abandon......好吧，也就记得他了0_0，对abandon多次重复的记忆让我们的部分神经元进入兴奋状态部分进入抑制状态，神经元间神经递质的传递让其他相关联神经元也相继进入神经兴奋/抑制状态，每当我们见到abandon，这些神经元就开始工作，神经递质也就相应传递，刚开始可能神经递质的传递很慢，但是记忆时间久了，神经递质的分泌以及信号在神经元间的传递速度加快，最后也就达到abandon放弃abandon放弃abandon放弃这种随口就来的状态。</p>
+<hr>
+<h3 id="机器学习的人工神经网络">机器学习的<a href="http://ufldl.stanford.edu/wiki/index.php/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" target="_blank" rel="noopener">人工神经网络</a></h3>
+<p>       其实这个标题原本打算用<神经网络中的数学>来命名的，但是为了避免数学本身存在的“望而却步”性，还是用<机器学习的神经网络>来命名吧。0.0数学来了不要慌，稳住，我们能羸，这里的数学基础知识暂时要求的不多，加减乘除分分钟搞定。</机器学习的神经网络></神经网络中的数学></p>
+<p>       在这儿顺便过渡一下上边的生物，这样可以更好的理解下边讲的数学部分，划重点了啊。神经元的两种状态：兴奋和抑制，怎么在两种状态间互相传递转化呢？上一个神经元的分泌的神经递质让下一个神经元产生相应的兴奋状态或抑制状态，最终下一个神经元是什么状态的呢？两种状态相互转换的临界点可以先简单认为为是由神经递质的多少决定的（实际并非如此，在这里我们做一个假设），当超过临界点时兴奋，低于临界点抑制。生物重点差不多划完了，接下来我们来划数学的，我们先来看一张图。</p>
+<div class="figure">
+<img src="/images/300px-SingleNeuron.png">
+
+</div>
+<p>       这个图就是单个神经元的简单图示法，圆圈代表一个“神经元”，x1,x2,x3就代表上一个神经元传递过来的神经递质，当这些神经递质刺激神经元时，神经元根据神经递质产生兴奋或者抑制的状态，之后再传递给其他神经元。但是神经元到底是怎么判定是兴奋还是抑制呢？按照上边我们的假设，两种状态的相互转换是由神经递质的多少决定的，假设阈值（临界点）是0.5,大于等于0.5时神经兴奋，反之抑制，假如x1,x2,x3三者的和是0.7,此时神经元兴奋，然后依此类推，多个神经元就组成了神经网络。</p>
+<p>       我们可以用数学方式来表示这个过程，之前我们是假设神经递质量的多少来决定兴奋抑制，但是实际并非如此，所以我们假设一个函数y=f(x1,x2,x3)，f(.)就是神经元状态变化的过程（不一定是累加的），他被称为<font color="#FF8C00"><b>激活函数</b></font>，我们最常见的就是用sigmoid函数作为激活函数，激活指的就是神经元兴奋和抑制互相激活的过程，y就是我们激活的结果，抑制或者兴奋，在这里我们用0和1分别表示抑制和兴奋。有没有感觉就像一个自动电饭煲，扔进去紫菜，米饭，水，自动balabala一顿捯饬，整出一碗饭来，好吃还是难吃？在这里我们引入输入（紫菜，米饭，水）和输出（好吃，难吃）的概念，也就是<font color="#000"><b>Input</b></font>:x1,x2,x3，<font color="#000"><b>Output</b></font>:0,1。</p>
+<p>Andrew Ng(吴恩达)</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2017/02/26/hello-world/">Hello World之Hexo+Github建博指南</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2017-02-26T09:36:52.000Z" itemprop="datePublished">
-          2017-02-26
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p class="index-excerpt">
-                      
-                               相信每一个程序猿对于Hello World并不陌生，该怎么说呢,应该说是都有一种特殊的情感在里面，对于当初懵懂好奇的我们他不仅给我们打开了一扇新世界的大门，同时也让我们有更多比尔盖茨般的梦想并为之奋斗。当初的你可能是在大计基的课堂上知道他，可能是在各种不同程序学习网站上了解他，也可能在培训讲师的讲解下学习他，总之恭喜你离聪（tou）明（fa）绝（diao）顶（guang）又近了一步。
-       不管是刚入门的小白还是工
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2017/02/26/hello-world/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
         <nav class="pagination" role="pagination">
-          
-          
-        </nav>
+    
+    
+    <a class="pull-right" href="/2017/02/26/hello-world/">
+        Hello World之Hexo+Github建博指南 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+
+
+</div>
     </div>
 </section>
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>Stay hungry,Stay foolish,Stay yourself</p>
-        </div>
-    </div>
-</section>
-<!-- ============================ END Content =========================== -->
+
 
       
 <!-- ============================ Footer =========================== -->
