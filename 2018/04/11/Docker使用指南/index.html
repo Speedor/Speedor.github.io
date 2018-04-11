@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>白柏翁</title>
+  <title>Docker使用指南 | 白柏翁</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -59,7 +59,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -145,153 +145,96 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2>YOU'VE MADE A <span>BRAVE</span> DECISION, WELCOME.</h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>每一个不曾起舞的日子都是对生命的辜负。</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-<!-- ============================ Content =========================== -->
-
+      
 <section id="intro">
     <div class="container">
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2018/04/11/Docker使用指南/">Docker使用指南</a></h3>
-                    <span>
-                        <span class="post-meta">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
       <time datetime="2018-04-11T08:10:03.000Z" itemprop="datePublished">
           2018-04-11
       </time>
     
 </span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p class="index-excerpt">
-                      
-                        原理
-http://blog.csdn.net/zjin_hua/article/details/52041757
-docker 知识
-https://segmentfault.com/a/1190000006893394
-http://blog.csdn.net/u010397369/article/details/41045251 # 如何进入docker # https://blog.csdn.net/halcyonbaby/ar
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2018/04/11/Docker使用指南/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
+                <h1>Docker使用指南</h1>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/07/02/机器学习之神经网络/">机器学习之神经网络</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-07-02T09:36:52.000Z" itemprop="datePublished">
-          2016-07-02
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p class="index-excerpt">
-                      
-                               总想写点儿什么却又不知道从哪写起，后来想了想还是从技术学习上说起吧，也算是对之前大学学习生活中的总结和认知的一个整理，因为不太喜欢把客观世界和主观意识分辨的太过于清晰，所以文章中自己的理解可能多一点儿，一是分享整理一下自己学习的知识，二是作为学习表达一下自己的观点，三是作为菜鸟的我认知可能还不到位，希望各位看官能提出宝贵的意见和建议。
+        <div class="col-md-8 col-md-offset-2">
+      		<h1 id="原理">原理</h1>
+<p>http://blog.csdn.net/zjin_hua/article/details/52041757</p>
+<h1 id="docker-知识">docker 知识</h1>
+<p>https://segmentfault.com/a/1190000006893394</p>
+<p>http://blog.csdn.net/u010397369/article/details/41045251 # 如何进入docker # https://blog.csdn.net/halcyonbaby/article/details/50085119 Docker1.9后的network:1.9之后，在Docker中network从实验特性转为正式特性发布。 # docker 阿里云安装 curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -</p>
+<h1 id="docker-镜像原理">docker 镜像原理</h1>
+<p>https://www.csdn.net/article/2015-08-21/2825511 #如何不用sudo使用docker sudo usermod -aG docker $USER</p>
+<h1 id="docker-迁移">============docker 迁移===================</h1>
+<p>https://www.jianshu.com/p/8408e06b7273 # 镜像操作 docker images docker save image_id &gt; tomcat8-apr.tar docker load &lt; tomcat8-apr.tar # 容器操作 docker export b91d9ad83efa &gt; tomcat80824.tar docker import tomcat80824.tar</p>
+<p>从容器快照文件中再导入为镜像 $ cat ubuntu.tar | sudo docker import - test/ubuntu:v1.0 $ sudo docker images REPOSITORY TAG IMAGE ID CREATED VIRTUAL SIZE test/ubuntu v1.0 9d37a6082e97 About a minute ago 171.3 MB</p>
+<p>镜像和容器 导出和导入的区别 镜像导入和容器导入的区别： 1）容器导入 是将当前容器 变成一个新的镜像 2）镜像导入 是复制的过程 save 和 export区别： 1）save 保存镜像所有的信息-包含历史 2）export 只导出当前的信息 #============yum 安装=================== yum -y install docker</p>
+<h1 id="创建dockerspider">创建docker:spider</h1>
+<p>sudo docker run -it --name notice_spider1 --restart=always -p 127.0.0.1:5004:5000 -v /home/LTspeedor/dockerfiles/zbzb:/app ubuntu:16.04 /bin/bash sudo docker run -it --name notice_spider --restart=always -v /home/LTspeedor/dockerfiles/:/apps notice/ubuntu:v1.0 /bin/bash sudo docker run -it --name spider --restart=always -p 5003:5000 -v /home/XinXin/dockerfiles/:/app ubuntu:16.04 /bin/bash sudo docker run -it --name crontofeed --restart=always -v /home/XinXin/dockerfiles/:/app cronfeed/ubuntu:v1.0 /bin/bash sudo docker run -it --name sjswebhook --restart=always -v /home/XinXin/dockerfiles/:/app sjswebhook/ubuntu:v1.0 /bin/bash</p>
+<p>sudo docker run -it --name do_2 --restart=always -v /usr/LTspeedor/dockerfiles/:/app scrapy/ubuntu:16.04 /bin/bash sudo docker run -it --name scrapy_redis06 --restart=always -v /home/LTspeedor/dockerfiles/:/apps notice/ubuntu:v1.0 /bin/bash</p>
+<h1 id="运行dockerspider">运行docker：spider</h1>
+<p>sudo docker exec -it spider /bin/bash</p>
+<p>docker run -it --name sjswebhook -v /home/XinXin/dockerfiles:/app -p 5003:5000 sjswebhook/ubuntu:v1.0 /bin/bash #=============进入docker============== sudo docker ps // 查看多个docker容器信息</p>
+<p>docker attach aaa // 进入名为aaa的容器中 root@731d42078403:/app# apt-get update</p>
+<h1 id="docker-与host互传文件">=============docker 与host互传文件=================</h1>
+<p>docker 的cp命令可以从容器往外复制，也可以从本机复制的容器。</p>
+<p>docker cp 文件路径 容器id:/容器目录 sudo docker cp /home/LTspeedor/requirments/ 731d42078403:/app sudo docker cp /home/LTspeedor/simple_spider/simple_spider/pipelines.py 731d42078403:/app/simple_spider/simple_spider sudo docker cp /home/LTspeedor/simple_spider/data_import.py 731d42078403:/app/simple_spider sudo docker cp /home/LTspeedor/simple_spider/simple_spider/spiders/LbankSpider.py 731d42078403:/app/simple_spider/simple_spider/spiders</p>
+<p>sudo docker cp /home/LTspeedor/gonggao1/ 731d42078403:/app sudo docker cp /home/LTspeedor/qiniucloud/ 731d42078403:/app</p>
+<p>sudo docker cp 731d42078403:/app/simple_spider/feednotice_to_feed2018-02-25.log /home/LTspeedor/ #============================== apt-get install cron</p>
+<p>service cron status service cron start service cron stop</p>
+<h1 id="section">=========================</h1>
+<p>apt-get update apt-get install pip apt-get install python-pip python-dev build-essential apt-get install vim apt-get install libmysqlclient-dev # mysqldb #=========Linux时间调整============= apt-get install -y tzdata</p>
+<p>ln -sf /usr/share/zoneinfo/Asia/ShangHai /etc/localtime &amp;&amp; echo &quot;Asia/Shanghai&quot; &gt; /etc/timezone &amp;&amp; dpkg-reconfigure -f noninteractive tzdata</p>
+<h1 id="这个可以直接设置">这个可以直接设置</h1>
+<p>TZ='# Asia/Shanghai' export TZ</p>
+<p>更新镜像 docker commit ID <name></name></p>
+<p>删除镜像 docker rmi <name></name></p>
+<h1 id="docker容器链接宿主机">==========docker容器链接宿主机==================</h1>
+<p>https://segmentfault.com/a/1190000008701796</p>
+<h1 id="docker-升级">===============docker 升级=====================</h1>
+<p>http://blog.csdn.net/mungo/article/details/54632686</p>
+<h1 id="docker-network">===============docker network=====================</h1>
+<p>http://www.zslin.com/web/article/detail/63</p>
+<p id="docker-markdown">Docker MarkDown</p>
+<h3 id="docker常用命令">docker常用命令</h3>
+<ul>
+<li>查看docker已启动容器： <code>docker ps</code></li>
+<li>查看docker所有容器： <code>docker ps -a</code></li>
+<li>查看docker镜像： <code>docker images</code></li>
+<li>启动coinspider容器： <code>docker start coinspider</code></li>
+<li>关闭coinspider容器： <code>docker stop coinspider</code></li>
+<li>进入coinspider容器（默认root用户）： <code>docker attach coinspider</code></li>
+<li><p>退出coinspider容器： <code>Ctrl+p+q</code></p></li>
+<li>创建spider容器（以ubuntu:16.04为镜像）： <code>sudo docker run -it --name spider --restart=always -p 5003:5000 -v /home/XinXin/dockerfiles/:/app ubuntu:16.04 /bin/bash</code></li>
+<li><p>删除spider容器 <code>sudo docker rm spider</code></p></li>
+<li>创建ubuntu:16.04镜像 <code>docker pull ubuntu:16.04</code></li>
+<li><p>删除ubuntu:16.4镜像 <code>docker rmi ubuntu:16.04</code></p></li>
+<li><p>docker 环境迁移 https://www.jianshu.com/p/8408e06b7273</p></li>
+</ul>
+<h5 id="docker-优质学习资源">docker 优质学习资源</h5>
+<p>http://blog.csdn.net/zjin_hua/article/details/52041757 http://www.docker.org.cn/page/resources.html</p>
 
-生物学中的生物神经网络
-       机器学习中神经网络是严格意义来讲应该是人工神经网
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/07/02/机器学习之神经网络/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <div class="col-md-4">
-                    <h3><a href="/2016/06/22/hello-world/">Hello World之Hexo+Github建博指南</a></h3>
-                    <span>
-                        <span class="post-meta">
-      <time datetime="2016-06-22T09:36:52.000Z" itemprop="datePublished">
-          2016-06-22
-      </time>
-    
-</span>
-                    </span>
-                </div>
-                <div class="col-md-8">
-                    <p class="index-excerpt">
-                      
-                               相信每一个程序猿对于Hello World并不陌生，该怎么说呢,应该说是都有一种特殊的情感在里面，对于当初懵懂好奇的我们他不仅给我们打开了一扇新世界的大门，同时也让我们有更多比尔盖茨般的梦想并为之奋斗。当初的你可能是在大计基的课堂上知道他，可能是在各种不同程序学习网站上了解他，也可能在培训讲师的讲解下学习他，总之恭喜你离聪（tou）明（fa）绝（diao）顶（guang）又近了一步。
-       不管是刚入门的小白还是工
-                      
-                    </p>
-                    
-                    <p class="pull-right readMore">
-                        <a href="/2016/06/22/hello-world/">Read More...</a>
-                    </p>
-                    
-                </div>
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
         <nav class="pagination" role="pagination">
-          
-          
-        </nav>
+    
+    
+    <a class="pull-right" href="/2016/07/02/机器学习之神经网络/">
+        机器学习之神经网络 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+
+
+</div>
     </div>
 </section>
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>Stay hungry,Stay foolish,Stay yourself</p>
-        </div>
-    </div>
-</section>
-<!-- ============================ END Content =========================== -->
+
 
       
 <!-- ============================ Footer =========================== -->
