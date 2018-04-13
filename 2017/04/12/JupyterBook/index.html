@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives: 2017 | 白柏翁</title>
+  <title>JupyterNoteBook | 白柏翁</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -59,7 +59,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -145,87 +145,169 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2>YOU'VE MADE A <span>BRAVE</span> DECISION, WELCOME.</h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>每一个不曾起舞的日子都是对生命的辜负。</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2017/04/12/JupyterBook/">JupyterNoteBook</a></h4>
-                            
-                            <p><time datetime="2017-04-12T07:05:05.000Z"><a href="/2017/04/12/JupyterBook/">2017-04-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2017/04/12/redis入坑/">Redis爬坑系列</a></h4>
-                            
-                            <p><time datetime="2017-04-12T07:05:05.000Z"><a href="/2017/04/12/redis入坑/">2017-04-12</a></time></p>
-                        </div>
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2017/04/11/Docker使用指南/">Docker使用指南</a></h4>
-                            
-                            <p><time datetime="2017-04-11T08:10:03.000Z"><a href="/2017/04/11/Docker使用指南/">2017-04-11</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2017-04-12T07:05:05.000Z" itemprop="datePublished">
+          2017-04-12
+      </time>
+    
+</span>
+                <h1>JupyterNoteBook</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<p>Jupyter Notebook<br>Jupyther notebook ,也就是一般说的 Ipython notebook，是一个可以把代码、图像、注释、公式和作图集于一处，从而实现可读性分析的一种灵活的工具。<br>Jupyter延伸性很好，支持多种编程语言，可以很轻松地安装在个人电脑或者任何服务器上——只要有ssh或者http接入就可以啦。最棒的一点是，它完全免费哦。</p>
+<p>Jupyter 界面<br>默认情况下，Jupyter Notebook 使用Python内核，这就是为什么它原名 IPython Notebook。Jupyter notebook是Jupyter项目的产物——Jupyter这个名字是它要服务的三种语言的缩写：Julia，PYThon和R，这个名字与“木星（jupiter）”谐音。本文将介绍27个轻松使用Jupyter的小窍门和技巧。</p>
+<p>Jupyter Notebook 有<b>两种键盘输入模式</b>，命令模式和编辑模式。</p>
+<ul>
+<li>编辑模式：允许你往单元中键入代码或文本，这时的单元框线是绿色的。</li>
+<li>命令模式：键盘输入运行程序命令，这时的单元框线是灰色。<h4 id="命令模式-按键-Esc-开启"><a href="#命令模式-按键-Esc-开启" class="headerlink" title="命令模式 (按键 Esc 开启)"></a>命令模式 (按键 Esc 开启)</h4>方法 | 作用<br>—-|—-<br>Enter | 转入编辑模式<br>Shift-Enter | 运行本单元，选中下个单元<br>Ctrl-Enter | 运行本单元<br>Alt-Enter | 运行本单元，在其下插入新单元<br>Y | 单元转入代码状态<br>M |单元转入markdown状态<br>R | 单元转入raw状态<br>1 | 设定 1 级标题<br>2 | 设定 2 级标题<br>3 | 设定 3 级标题<br>4 | 设定 4 级标题<br>5 | 设定 5 级标题<br>6 | 设定 6 级标题<br>Up | 选中上方单元<br>K | 选中上方单元<br>Down | 选中下方单元<br>J | 选中下方单元<br>Shift-K | 扩大选中上方单元<br>Shift-J | 扩大选中下方单元<br>A | 在上方插入新单元<br>B | 在下方插入新单元<br>X | 剪切选中的单元<br>C | 复制选中的单元<br>Shift-V | 粘贴到上方单元<br>V | 粘贴到下方单元<br>Z | 恢复删除的最后一个单元<br>D,D | 删除选中的单元<br>Shift-M | 合并选中的单元<br>Ctrl-S | 文件存盘<br>S | 文件存盘<br>L | 转换行号<br>O | 转换输出<br>Shift-O | 转换输出滚动<br>Esc | 关闭页面<br>Q | 关闭页面<br>H | 显示快捷键帮助<br>I,I | 中断Notebook内核<br>0,0 | 重启Notebook内核<br>Shift | 忽略<br>Shift-Space | 向上滚动<br>Space | 向下滚动</li>
+</ul>
+<h4 id="编辑模式-Enter-键启动"><a href="#编辑模式-Enter-键启动" class="headerlink" title="编辑模式 ( Enter 键启动)"></a>编辑模式 ( Enter 键启动)</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tab</td>
+<td>代码补全或缩进</td>
+</tr>
+<tr>
+<td>Shift-Tab</td>
+<td>提示</td>
+</tr>
+<tr>
+<td>Ctrl-]</td>
+<td>缩进</td>
+</tr>
+<tr>
+<td>Ctrl-[</td>
+<td>解除缩进</td>
+</tr>
+<tr>
+<td>Ctrl-A</td>
+<td>全选</td>
+</tr>
+<tr>
+<td>Ctrl-Z</td>
+<td>复原</td>
+</tr>
+<tr>
+<td>Ctrl-Shift-Z</td>
+<td>再做</td>
+</tr>
+<tr>
+<td>Ctrl-Y</td>
+<td>再做</td>
+</tr>
+<tr>
+<td>Ctrl-Home</td>
+<td>跳到单元开头</td>
+</tr>
+<tr>
+<td>Ctrl-Up</td>
+<td>跳到单元开头</td>
+</tr>
+<tr>
+<td>Ctrl-End</td>
+<td>跳到单元末尾</td>
+</tr>
+<tr>
+<td>Ctrl-Down</td>
+<td>跳到单元末尾</td>
+</tr>
+<tr>
+<td>Ctrl-Left</td>
+<td>跳到左边一个字首</td>
+</tr>
+<tr>
+<td>Ctrl-Right</td>
+<td>跳到右边一个字首</td>
+</tr>
+<tr>
+<td>Ctrl-Backspace</td>
+<td>删除前面一个字</td>
+</tr>
+<tr>
+<td>Ctrl-Delete</td>
+<td>删除后面一个字</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>进入命令模式</td>
+</tr>
+<tr>
+<td>Ctrl-M</td>
+<td>进入命令模式</td>
+</tr>
+<tr>
+<td>Shift-Enter</td>
+<td>运行本单元，选中下一单元</td>
+</tr>
+<tr>
+<td>Ctrl-Enter</td>
+<td>运行本单元</td>
+</tr>
+<tr>
+<td>Alt-Enter</td>
+<td>运行本单元，在下面插入一单元</td>
+</tr>
+<tr>
+<td>Ctrl-Shift—</td>
+<td>分割单元</td>
+</tr>
+<tr>
+<td>Ctrl-Shift-Subtract</td>
+<td>分割单元</td>
+</tr>
+<tr>
+<td>Ctrl-S</td>
+<td>文件存盘</td>
+</tr>
+<tr>
+<td>Shift</td>
+<td>忽略</td>
+</tr>
+<tr>
+<td>Up</td>
+<td>光标上移或转入上一单元</td>
+</tr>
+<tr>
+<td>Down</td>
+<td>光标下移或转入下一单元</td>
+</tr>
+</tbody>
+</table>
+</div>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>Stay hungry,Stay foolish,Stay yourself</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    
+    <a class="pull-right" href="/2017/04/12/redis入坑/">
+        Redis爬坑系列 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+
+
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
