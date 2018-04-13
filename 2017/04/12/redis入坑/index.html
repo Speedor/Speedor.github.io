@@ -187,13 +187,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pool = ConnectionPool.from_url(<span class="string">'redis://@localhost:6379/1'</span>)</span><br><span class="line">conn = StrictRedis(connection_pool=pool)</span><br></pre></td></tr></table></figure>
 <p>       在StrictRedis连接池连接后，我们就可以根据需求进行Python中的数据操作，当然在Python中的操作数据的方法跟在Redis客户端中操作的方法有大部分都是一模一样的，我们可以在IDE中查看具体的函数进行调用，也可以去官网查看相应的文档进行操作。</p>
 <h3 id="string操作">String操作</h3>
-<table style="width:100%;">
+<table style="width:28%;">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -376,13 +376,13 @@
 </tbody>
 </table>
 <h3 id="list操作">List操作</h3>
-<table style="width:100%;">
+<table style="width:28%;">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -474,13 +474,13 @@
 </tbody>
 </table>
 <h3 id="set操作">Set操作</h3>
-<table style="width:100%;">
+<table style="width:28%;">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -578,13 +578,13 @@
 </tbody>
 </table>
 <h3 id="sorted-set操作">Sorted Set操作</h3>
-<table style="width:100%;">
+<table style="width:28%;">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -664,13 +664,13 @@
 </tbody>
 </table>
 <h3 id="hash操作">Hash操作</h3>
-<table style="width:100%;">
+<table style="width:28%;">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
+<col width="5%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -757,8 +757,11 @@
 </table>
 <h3 id="redisdump">RedisDump</h3>
 <ul>
-<li>redis-load 将数据导入到数据库中</li>
+<li><p>redis-load 将数据导入到数据库中</p></li>
+<li><p>redis-dump 将数据库信息导出</p></li>
 </ul>
+<p>       到这里差不多Python操作Redis就可以了，呀，又到半夜12点多了，虽然还是有很多的不太熟悉的地方，但是在总结过程中还是学到了不少东西。</p>
+<h4 id="stay-hungrystay-foolish......">Stay hungry，Stay foolish......</h4>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
