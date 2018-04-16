@@ -582,7 +582,36 @@
 </table>
 <h4 id="dataframe常用索引方式">Dataframe常用索引方式</h4>
 <p>运算： 默认情况下，Dataframe和Series之间的算术运算会将Series的索引匹配到的Dataframe的列，沿着列一直向下传播。若索引找不到，则会重新索引产生并集。 D.Index pandas的索引对象负责管理轴标签和其他元数据（比如轴名称等）。构建Series或DataFrame时，所用到的任何数组或其他序列的标签都会被转换成一个Index。Index对象不可修改，从而在多个数据结构之间安全共享。</p>
-<p>  Index对象|说明 ---|--- Index|最广泛的Index对象，将轴标签表示为一个由Python对象组成的NumPy数组 Int64Index|针对整数的特殊Index MultiIndex|“层次化”索引对象，表示单个轴上的多层索引。可以看做由元组组成的数组 DatetimeIndex|存储纳秒级时间戳（用NumPy的Datetime64类型表示） PeriodIndex|针对Period数据（时间间隔）的特殊Index</p>
+<table>
+<thead>
+<tr class="header">
+<th>Index对象</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Index</td>
+<td>最广泛的Index对象，将轴标签表示为一个由Python对象组成的NumPy数组</td>
+</tr>
+<tr class="even">
+<td>Int64Index</td>
+<td>针对整数的特殊Index</td>
+</tr>
+<tr class="odd">
+<td>MultiIndex</td>
+<td>“层次化”索引对象，表示单个轴上的多层索引。可以看做由元组组成的数组</td>
+</tr>
+<tr class="even">
+<td>DatetimeIndex</td>
+<td>存储纳秒级时间戳（用NumPy的Datetime64类型表示）</td>
+</tr>
+<tr class="odd">
+<td>PeriodIndex</td>
+<td>针对Period数据（时间间隔）的特殊Index</td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr class="header">
