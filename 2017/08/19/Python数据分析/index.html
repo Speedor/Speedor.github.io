@@ -166,7 +166,23 @@
 <p>       NumPy是高性能的科学计算和数据分析的基础包。说白了就是用来处理数值数据，无非就是加减乘除，不过这里面向的对象是多维数组，当然最常见还是二维数组，也就是类似于表格数值形式的数据，有没有想到矩阵？在Numpy中，数组(ndarray)和矩阵(matrix)是存在不同数据类型的，而且计算也有点区别，要注意了哦。饭得一口一口吃，我们还是一点一点学吧。</p>
 <h4 id="安装">安装</h4>
 <p>       Numpy的安装其实很简单，只要pip install 就好，在这里推荐用<b>Anaconda3.x以上版本</b>。他是一个开源的Python发行版本，其包含了conda、Python等180多个科学包及其依赖项。因为包含了大量的科学包，Anaconda 的<font color="#000"><b><a href="https://www.anaconda.com/download/" target="_blank" rel="noopener">下载文件</a></b></font>比较大（约 515 MB），如果只需要某些包，或者需要节省带宽或存储空间，也可以使用Miniconda这个较小的发行版（仅包含conda和 Python）。Anaconda3.x中包含了Python3.x，因为2020年Python社区对2.7的更新会停止，所以我们还是早点适应Python3.0的环境比较好一点儿。更重要的是Anaconda中包含了Jupyter NoteBook、Numpy、Pandas等一系列众多科学计算常用库，所以只需安装Anaconda我们就可以直接使用，是不是很方便，而且安装也很简单，大家可以自行下载安装。</p>
-<p>NumPy函数和属性： 类型|类型代码|说明 ----|----|---- int8、uint8|i1、u1|有符号和无符号8位整型（1字节）</p>
+<p>       NumPy函数和属性：</p>
+<table>
+<thead>
+<tr class="header">
+<th>类型</th>
+<th>类型代码</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>int8、uint8</td>
+<td>i1、u1</td>
+<td>有符号和无符号8位整型（1字节）</td>
+</tr>
+</tbody>
+</table>
 <p>int16、uint16|i2、u2|有符号和无符号16位整型（2字节）</p>
 <p>int32、uint32|i4、u4|有符号和无符号32位整型（4字节）</p>
 <p>int64、uint64|i8、u8|有符号和无符号64位整型（8字节）</p>
