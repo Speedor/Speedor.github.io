@@ -169,6 +169,16 @@
 <li>Docker：不管是采用Python virtualenv还是直接使用Python环境，两者都没有直接使用Docker环境方便，Docker镜像的可重用性让环境的迁移变得更加方便，可以让我们后期架构拓展更加简单快捷。</li>
 <li>Scrapy：Scrapy框架的基于Twited的异步使得爬虫效率的得到很大提升，而且Scrapy使用简单方便数据产出量高，最重要的是成熟稳定。当然在这里我们自己也要考虑网站反爬的因素对Scrapy中件间做出适当调整，毕竟对于Robots协议我们还要注意一下，争取做一个优秀的、有道德的、有节操的码农(0.0说得我自己差点都信了)。</li>
 </ul>
+<h3 id="scrapy">Scrapy</h3>
+<p>       对于Scrapy的数据抓取无论是<a href="....">官网</a>还是一些其他博客都讲的很清楚，毕竟Scrapy的整体框架简单易懂，另外基于Python的简便快速，我们可以把更多的精力用于解决问题本身，不用过多地拘泥于语法和函数的学习中，在这里推荐<a href="....">靜觅</a>的Scrapy教程，清晰地讲述了Scrapy的基本用法，我这里就不过多的啰嗦了，因为本文重点在于分布式整体架构的思路及实现，所以大家对Scrapy有不太明白的可以自己学习，只要下面图的流程理清了就可以了，很简单的...</p>
+<div class="figure">
+<img src="/images/scrapy_1.png">
+
+</div>
+<p>分布式Scrapy与单机Scrapy的主要不同：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from scrapy_redis.spiders import RedisSpider</span><br><span class="line">import scrapy</span><br><span class="line"></span><br><span class="line">class OldSpider(scrapy.Spider):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">class NewSpider(RedisSpider):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<h3 id="docker">Docker</h3>
+<p>       Docker1.9后的network:1.9之后，在Docker中network从实验特性转为正式特性发布。</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
