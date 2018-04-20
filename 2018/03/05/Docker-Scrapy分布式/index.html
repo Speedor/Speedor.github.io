@@ -175,10 +175,30 @@
 <img src="/images/scrapy_1.png">
 
 </div>
-<p>分布式Scrapy与单机Scrapy的主要不同：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from scrapy_redis.spiders import RedisSpider</span><br><span class="line">import scrapy</span><br><span class="line"></span><br><span class="line">class OldSpider(scrapy.Spider):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">class NewSpider(RedisSpider):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
 <h3 id="docker">Docker</h3>
-<p>       Docker1.9后的network:1.9之后，在Docker中network从实验特性转为正式特性发布。</p>
+<p>       Docker1.9后的network:1.9之后，在Docker中network从实验特性转为正式特性发布，所以先将Docker升级为1.9以上版本以支持不同容器间通信。</p>
+<hr>
+<h3 id="分布式中scrapy应用">分布式中Scrapy应用</h3>
+<p>       <font color="#000"><b>Docker+Scrapy分布式的主要思想</b></font>是通过利用Redis的List作队列，PUSH众多urls进入Redis队列中后，让Docker不同容器中的等待ScrapySpider把urls从Redis中POP出来进行请求并解析处理数据，之后的处理跟单机式的Scrapy任务就没有什么区别了，根据需求入库或者其他就好了。</p>
+<p>       单机变为分布式的修改之处：</p>
+<ul>
+<li>scrapy_redis:一个基于redis的scrapy组件，通过它可以快速实现简单分布式爬虫程序</li>
+<li>Redis:Key-value数据库的使用</li>
+<li>数据抓取架构和思路变化</li>
+</ul>
+<p>       scrapy_redis组件本质上提供了三大功能：scheduler(调度器)，dupefilter(URL去重规则-被调度器使用)，pipeline(数据持久化)。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from scrapy_redis.spiders import RedisSpider</span><br><span class="line">import scrapy</span><br><span class="line"></span><br><span class="line"><span class="comment"># scrapy中Spider默认继承scrapy.Spider</span></span><br><span class="line">class OldSpider(scrapy.Spider):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在使用分布式要改为继承scrapy_redis.spiders.RedisSpider</span></span><br><span class="line">class NewSpider(RedisSpider):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<p>       在Spider中除了以上不同还要将start_urls替换为待爬url在redis中的key，因为对于多个容器之后在读取redis中key时要以<font color="#000"><b>队列</b></font>方式进行pop，这里每个容器里的ScrapySpider要处理url抓取及解析。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">redis_key = <span class="string">'coinmarket:urls'</span>  <span class="comment"># 取代start_urls</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># start_url = 'https://www.xxx.com'</span></span><br></pre></td></tr></table></figure>
+<p>       Spider文件主要修改的内容就是这些，之后数据解析的一些东西根据需求改动就可以了。</p>
+<h3 id="分布式中docker应用">分布式中Docker应用</h3>
+<p>       <b>Docker在这里主要是不同容器配置同一网段的容器静态IP，让不同的Docker容器可以互相通信。</b></p>
+<p>       dokcer容器在创建时默认设置网络模式是bridge模式，安装完docker，系统会自动添加一个供docker使用的网桥docker0，我们创建一个新的容器时，容器通过DHCP获取一个与docker0同网段的IP地址。并默认连接到docker0网桥，以此实现容器与宿主机的网络互通。当然还有其他几种网络模式（host、container、none，有点类似于VMware的网络模式，但是还是有区别的）。</p>
+<p>       在查看完docker0网桥的IP后，我们在新建docker时需指定同一网段的IP，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># xxxxxx是指其它配置，在这里我们只关注ip配置</span></span><br><span class="line">docker run -i -d --net docker-br0 --ip 172.172.0.10 --name scrapy_spider01 xxxxxxx</span><br></pre></td></tr></table></figure>
+<p>       在这里我们先以一个容器作配置，因为只要一个配置好后，我们以本容器为准就可以创建镜像并创建其他相同容器，这样不管是在同一宿主机还是其他多台宿主机都可以很方便的移植。在进入新建容器后进行apt-get update后下载net工具等进行ping测试，当然啦这里有一点儿小插曲就是有可能ping不通，原因可能有很多，这里要仔细的检查一下Docker容器配置等，具体的问题我就不多说了，大家遇到问题不要头大，一步一步做下去都会解决的。</p>
+<p>       可以说在Docker容器ping通之后已经可以说大功告成了，因为之后的就是scrapy的部署，只要一个容器部署好，其他也就可以了，只不过这里要根据数据抓取需求做好处理工作就可以了，一切还是以需求为准（好吧，需求一天变3次的坑就不说了，说多了都是泪）。</p>
+<p>       至于Scrapy部署相信大家都可以搞的定，我这里也就不啰嗦了。Docker+Scrapy的优点主要是可以用单机实现分布式的效果，实现服务器资源利用率最大化，当然还有其他比如说移植快捷方便等优点。不过在这次项目中还是发现了Docker一些其他用法，大家可以在用的过程中去探索，相信他在简化我们工作的同时也会带来一些意想不到的效果。</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
