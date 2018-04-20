@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Archives: 2017/12 | 白柏翁</title>
+  <title>（July老师）理解SVM的三层境界 | 白柏翁</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -59,7 +59,7 @@
 </head>
 
 <!--
-<body class="home-template">
+<body class="post-template">
 -->
 <body id="index" class="lightnav animsition">
 
@@ -145,69 +145,118 @@
         <!-- ============================ Header & Logo bar =========================== -->
 
 
-      <!-- ============================ Hero Image =========================== -->
-
-<section id="hero" class="scrollme">
-    <div class="container-fluid element-img" style="background: url(/img/bg_img.jpg) no-repeat center center fixed;background-size: cover">
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                    <div>
-                        
-                        <h2>Wisdom starts with owning up to ignorance.</h2>
-                        <p></p>
-                        
-                        <h2></h2>
-                        <p>人永远是要学习的。死的时候，才是毕业的时候。</p>
-                        
-
-                    </div>
-                </div>
-            </div>
-            <!-- // .col-md-12 -->
-        </div>
-        <div class="herofade beige-dk"></div>
-    </div>
-</section>
-
-<!-- Height spacing helper -->
-<div class="heightblock"></div>
-<!-- // End height spacing helper -->
-
-<!-- ============================ END Hero Image =========================== -->
-
-
-
-
-<section id="services">
+      
+<section id="intro">
     <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row boxes">
-                    
-                    
-                        
-                        
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInUp" data-wow-delay="0.3s">
-                            
-                              <h4 class="title"><a href="/2017/12/20/(董伟明老师)使用Python进行并发编程-asyncio篇/">（July老师）理解SVM的三层境界</a></h4>
-                            
-                            <p><time datetime="2017-12-20T09:27:36.000Z"><a href="/2017/12/20/(董伟明老师)使用Python进行并发编程-asyncio篇/">2017-12-20</a></time></p>
-                        </div>
-                    
-                </div>
-            </div>    
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2017-12-20T09:27:36.000Z" itemprop="datePublished">
+          2017-12-20
+      </time>
+    
+</span>
+                <h1>（July老师）理解SVM的三层境界</h1>
+            </div>
         </div>
-    </div>
-</section> 
+        <div class="col-md-8 col-md-offset-2">
+      		<h4 id="理解svm的三层境界原文入口">理解SVM的三层境界原文：<a href="https://blog.csdn.net/macyang/article/details/38782399/" target="_blank" rel="noopener">入口</a></h4>
+<p>作者：July、pluskid ；致谢：白石、JerryLead 出处：结构之法算法之道blog。</p>
+<p>       大牛可以绕路了，相信你们直接看李航老师的《统计学习方法》也看得懂（躲在角落瑟瑟发抖ing......）。</p>
+<p>       July大神的博文一直很好，在学习过程中一直也在跟随他的脚步，这篇可以说是一篇小论文，虽然自己看完后还是蒙X状态，但是还是想给大家推荐一下，可以在跟着看的同时捋一捋自己学过的东西，也可以看看自己还欠缺的东西。感觉自己还差得很远，不多说了一起学习吧。</p>
+<h4 id="第一层了解svm">第一层、了解SVM</h4>
+<ul>
+<li>1.0、什么是支持向量机SVM</li>
+<li>1.1、线性分类
+<ul>
+<li>1.1.1、分类标准</li>
+<li>1.1.2、1或-1分类标准的起源：logistic回归</li>
+<li>1.1.3、形式化标示</li>
+</ul></li>
+<li>1.2、线性分类的一个例子</li>
+<li>1.3、函数间隔Functional margin与几何间隔Geometrical margin
+<ul>
+<li>1.3.1、函数间隔Functional margin</li>
+<li>1.3.2、点到超平面的距离定义：几何间隔Geometrical margin</li>
+</ul></li>
+<li>1.4、最大间隔分类器Maximum Margin Classifier的定义</li>
+<li>1.5、到底什么是Support Vector</li>
+</ul>
+<h4 id="第二层深入svm">第二层、深入SVM</h4>
+<ul>
+<li>2.1、从线性可分到线性不可分
+<ul>
+<li>2.1.1、从原始问题到对偶问题的求解</li>
+<li>2.1.2、KKT条件</li>
+<li>2.1.3、对偶问题求解的3个步骤</li>
+<li>2.1.4、序列最小最优化SMO算法</li>
+<li>2.1.5、线性不可分的情况</li>
+</ul></li>
+<li>2.2、核函数Kernel
+<ul>
+<li>2.2.1、特征空间的隐式映射：核函数</li>
+<li>2.2.2、核函数：如何处理非线性数据</li>
+<li>2.2.3、几个核函数</li>
+<li>2.2.4、核函数的本质</li>
+<li>2.3、使用松弛变量处理 outliers 方法</li>
+</ul></li>
+</ul>
+<h4 id="第三层证明svm">第三层、证明SVM</h4>
+<ul>
+<li>3.1、线性学习器
+<ul>
+<li>3.1.1、感知机算法</li>
+</ul></li>
+<li>3.2、非线性学习器
+<ul>
+<li>3.2.1、Mercer定理</li>
+</ul></li>
+<li>3.3、损失函数；
+<ul>
+<li>3.3、损失函数</li>
+</ul></li>
+<li>3.4、最小二乘法；
+<ul>
+<li>3.4.1、什么是最小二乘法？</li>
+<li>3.4.2、最小二乘法的解法</li>
+</ul></li>
+<li>3.5、SMO算法；
+<ul>
+<li>3.5.1、SMO算法的解法</li>
+<li>3.5.2、SMO算法的步骤</li>
+<li>3.5.3、SMO算法的实现</li>
+</ul></li>
+<li>3.6、简略谈谈SVM的应用
+<ul>
+<li>3.6.1、文本分类</li>
+</ul></li>
+</ul>
+<p>       好吧，这篇文章太长了0.0，大家还是参考原文吧，对着大纲看可以查缺补漏，对自己之前没有接触过或者不熟悉的可以再深入一下，一起学习吧～～</p>
 
-<section id="statement">
-    <div class="container text-center wow fadeInUp" data-wow-delay="0.5s">
-        <div class="row">
-            <p>Stay hungry,Stay foolish,Stay yourself</p>
+            <div class="clearfix"></div>
+            <hr class="nogutter">
         </div>
+        <nav class="pagination" role="pagination">
+    
+    <a class="pull-left" href="/2018/03/05/Docker-Scrapy分布式/" style="float: left;">
+        ← Docker+Scrapy分布式
+    </a>
+    
+    
+    <a class="pull-right" href="/2017/09/20/分享一些自己的学习感悟/">
+        分享一些自己的学习感悟 →
+    </a>
+    
+</nav>
+
+        <div class="duoshuo">
+
+
+</div>
     </div>
 </section>
+
+
       
 <!-- ============================ Footer =========================== -->
 
