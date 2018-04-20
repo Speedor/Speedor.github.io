@@ -162,7 +162,7 @@
         <div class="col-md-8 col-md-offset-2">
       		<p>       跟着一位大牛接触了一段时间深度学习很感谢他带我入门，当然啦还是要膜拜一下“花书”，后来接触过程中发现这个东西还是有点意思的，尤其是看到TensorBoard这个神奇的可视化工具后感觉像是Google为我们开了一扇新的大门。其实Google对于TensorFlow的版本迭代更新差不多两个多月就有一个更新，可见Google对TensorFlow的重视程度，从TPU的推进和TensorFlow的更新就可以看出Google的生态圈正在逐步完善，应该离形成闭环也不远了，可以想像Google的生态圈将会更加强大和稳健。</p>
 <h4 id="tensorflow简介">TensorFlow简介</h4>
-<p>       TensorFlow实际上Tensor（张量）和Flow（流）的合成词，我们可以先理解为<font color="#000"><b>数据流动</b></font>（我是这么理解的），大家有不同的理解方式可以提出来一起学习，TensorFlow的中文社区做的挺好，可以做为入门参考，毕竟它更新太快我们还是尽量参考官网最好，另外极客学院也对其做了一次中文翻译，大家可以根据自己不同的情况进行学习。</p>
+<p>       TensorFlow实际上Tensor（张量）和Flow（流）的合成词，我们可以先理解为<font color="#000"><b>数据流动</b></font>（我是这么理解的），大家有不同的理解方式可以提出来一起学习，<font color="#000"><b><a href="http://www.tensorfly.cn/" target="_blank" rel="noopener">TensorFlow的中文社区</a></b></font>做的挺好，可以做为入门参考，毕竟它更新太快我们还是尽量参考<a href="https://tensorflow.google.cn/" target="_blank" rel="noopener">官网</a>最好，另外<font color="#000"><b><a href="http://wiki.jikexueyuan.com/project/tensorflow-zh/" target="_blank" rel="noopener">极客学院</a></b></font>也对其做了一次中文翻译，大家可以根据自己不同的情况进行学习。</p>
 <p>       虽然Google开源了TensorFlow，在简化我们工作的同时本质上还是要用扎实的理论知识做支撑，我们还是要做好基础然后再用TensorFlow做一些实践，两者相结合进行学习，当然这是我的学习过程，大学觉得有好的可以提出来一起学习。</p>
 <p>       TensorFlow是一个采用数据流图（data flow graphs），用于数值计算的开源软件库。节点（Nodes）在图中表示数学操作，图中的线（edges）则表示在节点间相互联系的多维数据数组，即张量（tensor）。它灵活的架构让你可以在多种平台上展开计算，例如台式计算机中的一个或多个CPU（或GPU），服务器，移动设备等等。</p>
 <div class="figure">
@@ -199,6 +199,7 @@
 <h4 id="feed">Feed</h4>
 <p>       feed 使用一个 tensor 值临时替换一个操作的输出结果. 你可以提供 feed 数据作为 run() 调用的参数. feed 只在调用它的方法内有效, 方法结束, feed 就会消失. 最常见的用例是将某些特殊的操作指定为 &quot;feed&quot; 操作, 标记的方法是使用 tf.placeholder() 为这些操作创建占位符.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">input1 = tf.placeholder(tf.float32)</span><br><span class="line">input2 = tf.placeholder(tf.float32)</span><br><span class="line">output = tf.mul(input1, input2)</span><br><span class="line"></span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">  <span class="built_in">print</span> sess.run([output], feed_dict=&#123;input1:[7.], input2:[2.]&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出:</span></span><br><span class="line"><span class="comment"># [array([ 14.], dtype=float32)]</span></span><br><span class="line"><span class="comment">#for a larger-scale example of feeds. 如果没有正确提供 feed, placeholder() 操作将会产生错误. MNIST 全连通 feed 教程 (source code) 给出了一个更大规模的使用 feed 的例子.</span></span><br></pre></td></tr></table></figure>
+<p>       TensorFlow简单的主要流程就是这样，在理解了这些基础概念后我们还是要对理论本身和理解数据做深究，毕竟只有彼此相结合才能更好地做出自己想要的模型，一起努力学习吧！</p>
 <h4 id="参考">参考</h4>
 <p>http://www.tensorfly.cn/ http://www.tensorfly.cn/tfdoc/tutorials/overview.html http://wiki.jikexueyuan.com/project/tensorflow-zh/how_tos/summaries_and_tensorboard.html</p>
 
