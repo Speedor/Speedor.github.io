@@ -160,43 +160,31 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>       最近一直在做分布式爬虫，爬虫效率提高的同时也在对库的要求越来越高，由于每分钟数据IO的次数过高，最终采用了redis做为缓存进入数据存储，Redis作为NoSQL中高性能的key-value数据库再适合不过做缓存，Redis的一些基本使用还是要总结一下，分享一些自己趟过的坑，希望对大家有所帮助。</p>
-<h3 id="redis-简介">Redis 简介</h3>
-<p>       在所有数据库中Redis的定位用“小巧玲珑”来评价再适合不过，读写性能极佳的同时只用string，list，set，sorted set，hash等五种简单的类型结构使得使用也很简单方便。Redis通常用key-value 做内存缓存，另外由于分布式redis架构的出现，稳定、高效、方便的特点使其更加突出。但是即便如此Redis也存在一些缺点，Redis数据类型都是Key-Value型，他不适合在不同数据集之间像Mysql那样建立关系，也不太适合进行查询搜索。比如redis的keys pattern这种匹配操作，对redis的性能是灾难。Redis只能使用单线程，性能受限于CPU性能，故单实例CPU最高才可能达到5-6wQPS每秒（取决于数据结构，数据大小以及服务器硬件性能，日常环境中QPS高峰大约在1-2w左右）。不管怎么样，Redis不仅是在业务使用上还是在维护上都很方便，这应该也是Redis活跃在各大网站背后的原因吧。</p>
+      		<p>&#160; &#160; &#160; &#160;最近一直在做分布式爬虫，爬虫效率提高的同时也在对库的要求越来越高，由于每分钟数据IO的次数过高，最终采用了redis做为缓存进入数据存储，Redis作为NoSQL中高性能的key-value数据库再适合不过做缓存，Redis的一些基本使用还是要总结一下，分享一些自己趟过的坑，希望对大家有所帮助。</p>
+<h3 id="Redis-简介"><a href="#Redis-简介" class="headerlink" title="Redis 简介"></a>Redis 简介</h3><p>&#160; &#160; &#160; &#160;在所有数据库中Redis的定位用“小巧玲珑”来评价再适合不过，读写性能极佳的同时只用string，list，set，sorted set，hash等五种简单的类型结构使得使用也很简单方便。Redis通常用key-value 做内存缓存，另外由于分布式redis架构的出现，稳定、高效、方便的特点使其更加突出。但是即便如此Redis也存在一些缺点，Redis数据类型都是Key-Value型，他不适合在不同数据集之间像Mysql那样建立关系，也不太适合进行查询搜索。比如redis的keys pattern这种匹配操作，对redis的性能是灾难。Redis只能使用单线程，性能受限于CPU性能，故单实例CPU最高才可能达到5-6wQPS每秒（取决于数据结构，数据大小以及服务器硬件性能，日常环境中QPS高峰大约在1-2w左右）。不管怎么样，Redis不仅是在业务使用上还是在维护上都很方便，这应该也是Redis活跃在各大网站背后的原因吧。</p>
 <hr>
-<h3 id="redis安装及配置">Redis安装及配置</h3>
-<p>       废话不多说了，先来安装走一波，Redis安装相对来说很简单，就是配置和使用上需要仔细一些，因为redis默认配置文件redis.conf还是有点细节的，比如密码认证（曾经就遇到过同事因为Redis密码没有正确配置导致库被黑，还是要注意一下安全性），因为redis本身并没有实现访问控制这个功能，但是它提供了一个轻量级的认证方式，可以编辑redis.conf配置文件（参数：requirepass配置redis访问密码的参数）来启用认证。还有一点就是关于<b>Redis后台启动的配置</b>，在配置文件中找到参数daemonize设置为yes启动即可，至于其他配置可根据需求进行相关配置。</p>
+<h3 id="Redis安装及配置"><a href="#Redis安装及配置" class="headerlink" title="Redis安装及配置"></a>Redis安装及配置</h3><p>&#160; &#160; &#160; &#160;废话不多说了，先来安装走一波，Redis安装相对来说很简单，就是配置和使用上需要仔细一些，因为redis默认配置文件redis.conf还是有点细节的，比如密码认证（曾经就遇到过同事因为Redis密码没有正确配置导致库被黑，还是要注意一下安全性），因为redis本身并没有实现访问控制这个功能，但是它提供了一个轻量级的认证方式，可以编辑redis.conf配置文件（参数：requirepass配置redis访问密码的参数）来启用认证。还有一点就是关于<b>Redis后台启动的配置</b>，在配置文件中找到参数daemonize设置为yes启动即可，至于其他配置可根据需求进行相关配置。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置完成后用如下命令启动Redis服务（常用后台启动）</span></span><br><span class="line">$ redis-server ../redis.conf</span><br></pre></td></tr></table></figure>
-<p>       Redis服务启动后用下面的命令连接Redis进行数据操作就可以了，类似于Mysql服务的启动和连接</p>
+<p>&#160; &#160; &#160; &#160;Redis服务启动后用下面的命令连接Redis进行数据操作就可以了，类似于Mysql服务的启动和连接</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 远程连接密码访问验证</span></span><br><span class="line">$ redis-cli -h host -p port -a password</span><br></pre></td></tr></table></figure>
 <hr>
-<h3 id="基本类型的使用">基本类型的使用</h3>
-<p>       知道我想说什么吗，嘿嘿，还是那句话，一切以<font color="#000"><b><a href="https://redis.io/commands" target="_blank" rel="noopener">官方</a></b></font>为准，因为官方在版本变更的时候会及时给出文档变更参考，可能会出现一些问题就是因为版本的问题，不仅Redis是这样，其他也是如此。</p>
-<p>String类型 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最基本类型，可以包含任何数据，一个key最大能存储512MB</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SET设置指定 key 的值，key为 user</span></span><br><span class="line">127.0.0.1:6379&gt; SET user Jack</span><br><span class="line"></span><br><span class="line"><span class="comment"># GET获取指定 key 的值，key为 user</span></span><br><span class="line">127.0.0.1:6379&gt; GET user</span><br></pre></td></tr></table></figure></p>
-<p>Hash类型 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># string类型的field和value的映射表，适合存储对象（不用string类型节省内存）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># HSET设置指定 key 的值，key为 user</span></span><br><span class="line">127.0.0.1:6379&gt; HSET user name Jack</span><br><span class="line"></span><br><span class="line"><span class="comment"># HGET获取指定 key 的值，key为 user</span></span><br><span class="line">127.0.0.1:6379&gt; HGET user name</span><br><span class="line"></span><br><span class="line"><span class="comment"># HMSET设置指定多个值</span></span><br><span class="line">127.0.0.1:6379&gt; HGET user name Jack age 18 country china</span><br><span class="line"></span><br><span class="line"><span class="comment"># HMGET获取指定值</span></span><br><span class="line">127.0.0.1:6379&gt; HGET user country</span><br></pre></td></tr></table></figure></p>
+<h3 id="基本类型的使用"><a href="#基本类型的使用" class="headerlink" title="基本类型的使用"></a>基本类型的使用</h3><p>&#160; &#160; &#160; &#160;知道我想说什么吗，嘿嘿，还是那句话，一切以<font color="#000"><b><a href="https://redis.io/commands" target="_blank" rel="noopener">官方</a></b></font>为准，因为官方在版本变更的时候会及时给出文档变更参考，可能会出现一些问题就是因为版本的问题，不仅Redis是这样，其他也是如此。</p>
+<p>String类型<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最基本类型，可以包含任何数据，一个key最大能存储512MB</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SET设置指定 key 的值，key为 user</span></span><br><span class="line">127.0.0.1:6379&gt; SET user Jack</span><br><span class="line"></span><br><span class="line"><span class="comment"># GET获取指定 key 的值，key为 user</span></span><br><span class="line">127.0.0.1:6379&gt; GET user</span><br></pre></td></tr></table></figure></p>
+<p>Hash类型<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># string类型的field和value的映射表，适合存储对象（不用string类型节省内存）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># HSET设置指定 key 的值，key为 user</span></span><br><span class="line">127.0.0.1:6379&gt; HSET user name Jack</span><br><span class="line"></span><br><span class="line"><span class="comment"># HGET获取指定 key 的值，key为 user</span></span><br><span class="line">127.0.0.1:6379&gt; HGET user name</span><br><span class="line"></span><br><span class="line"><span class="comment"># HMSET设置指定多个值</span></span><br><span class="line">127.0.0.1:6379&gt; HGET user name Jack age 18 country china</span><br><span class="line"></span><br><span class="line"><span class="comment"># HMGET获取指定值</span></span><br><span class="line">127.0.0.1:6379&gt; HGET user country</span><br></pre></td></tr></table></figure></p>
 <p>Lish类型</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 双向链表，每个子元素都是string类型，可以用push、pop从头或尾添加删除元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># LPUSH向key为user的列表添加元素</span></span><br><span class="line">127.0.0.1:6379&gt;lpush user Jack</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt;lpush user Tom</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt;lpush user Tiny</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看key为user的列表的第0到第5个元素</span></span><br><span class="line">127.0.0.1:6379&gt;lrange user 0 5</span><br></pre></td></tr></table></figure>
 <p>Set类型</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 集合可以实现交并差补，因为其通过hash table实现，添加、删除、查找的复杂度都是O(1)，hash table会随着添加或者删除自动调整占用空间</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sadd向key为user的集合添加元素</span></span><br><span class="line">127.0.0.1:6379&gt;sadd user Jack</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt;sadd user Tiny</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt;sadd user Tom</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt;sadd user Tom</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取user值（因为集合的原因只存在一个Tom，这也是Redis实现去重的一个实现方法）</span></span><br><span class="line">127.0.0.1:6379&gt;smembers user</span><br></pre></td></tr></table></figure>
 <p>Sorted Set类型</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set的升级版本：在set的基础上添加顺序属性（用一个double类型的score进行排序）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># zadd向key为user的有序集合添加元素</span></span><br><span class="line">127.0.0.1:6379&gt;zadd user 0 Jack</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里的score就是user后的2,每次指定score后，有序集合会自动重新按照新的score调整顺序</span></span><br><span class="line">127.0.0.1:6379&gt;zadd user 2 Tom</span><br><span class="line"></span><br><span class="line"><span class="comment"># 另外有序集合的元素是唯一的，但是score是可以重复的</span></span><br><span class="line">127.0.0.1:6379&gt;zadd user 1 Tiny</span><br><span class="line"></span><br><span class="line">127.0.0.1:6379&gt;zadd user 1 Smith</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看key为user的有序集合第0到第4个元素</span></span><br><span class="line">127.0.0.1:6379&gt;zrangebyscore user 0 4</span><br></pre></td></tr></table></figure>
-<p>       对于以上常见的5种基本操作其实也不难，而且Redis也给我们提供了提示功能，相信在操作的过程中也被你发现了，我们只要对于具体的业务逻辑具体分析，然后根据需求进行Redis操作，当然不同的语言对Redis的支持也有点区别，但是都是大同小异。人生苦短，我用Python......</p>
-<h5 id="redis的默认方式连接">Redis的默认方式连接</h5>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#pip安装redis模块就可以进行redis连接池操作，并且使用StrictRedis连接池有自己的关闭接口，无需人为关闭</span></span><br><span class="line"></span><br><span class="line">from redis import ConnectionPool, StrictRedis</span><br><span class="line"></span><br><span class="line">pool = ConnectionPool(host=settings.REDIS_HOST,</span><br><span class="line">                      port=settings.REDIS_PORT,</span><br><span class="line">                      db=0,</span><br><span class="line">                      password=settings.REDIS_PASSWD)</span><br><span class="line">conn = StrictRedis(connection_pool=pool,</span><br><span class="line">                   password=settings.REDIS_PASSWD)</span><br><span class="line"></span><br><span class="line">conn.hset(name=item_name, key=item_key, value=item_value)</span><br></pre></td></tr></table></figure>
-<h5 id="redis的url方式连接">Redis的URL方式连接</h5>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pool = ConnectionPool.from_url(<span class="string">'redis://@localhost:6379/1'</span>)</span><br><span class="line">conn = StrictRedis(connection_pool=pool)</span><br></pre></td></tr></table></figure>
-<p>       在StrictRedis连接池连接后，我们就可以根据需求进行Python中的数据操作，当然在Python中的操作数据的方法跟在Redis客户端中操作的方法有大部分都是一模一样的，我们可以在IDE中查看具体的函数进行调用，也可以去官网查看相应的文档进行操作。</p>
-<h3 id="string操作">String操作</h3>
-<table style="width:28%;">
-<colgroup>
-<col width="5%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
-</colgroup>
+<p>&#160; &#160; &#160; &#160;对于以上常见的5种基本操作其实也不难，而且Redis也给我们提供了提示功能，相信在操作的过程中也被你发现了，我们只要对于具体的业务逻辑具体分析，然后根据需求进行Redis操作，当然不同的语言对Redis的支持也有点区别，但是都是大同小异。人生苦短，我用Python……</p>
+<h5 id="Redis的默认方式连接"><a href="#Redis的默认方式连接" class="headerlink" title="Redis的默认方式连接"></a>Redis的默认方式连接</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#pip安装redis模块就可以进行redis连接池操作，并且使用StrictRedis连接池有自己的关闭接口，无需人为关闭</span></span><br><span class="line"></span><br><span class="line">from redis import ConnectionPool, StrictRedis</span><br><span class="line"></span><br><span class="line">pool = ConnectionPool(host=settings.REDIS_HOST,</span><br><span class="line">                      port=settings.REDIS_PORT,</span><br><span class="line">                      db=0,</span><br><span class="line">                      password=settings.REDIS_PASSWD)</span><br><span class="line">conn = StrictRedis(connection_pool=pool,</span><br><span class="line">                   password=settings.REDIS_PASSWD)</span><br><span class="line"></span><br><span class="line">conn.hset(name=item_name, key=item_key, value=item_value)</span><br></pre></td></tr></table></figure>
+<h5 id="Redis的URL方式连接"><a href="#Redis的URL方式连接" class="headerlink" title="Redis的URL方式连接"></a>Redis的URL方式连接</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pool = ConnectionPool.from_url(<span class="string">'redis://@localhost:6379/1'</span>)</span><br><span class="line">conn = StrictRedis(connection_pool=pool)</span><br></pre></td></tr></table></figure>
+<p>&#160; &#160; &#160; &#160;在StrictRedis连接池连接后，我们就可以根据需求进行Python中的数据操作，当然在Python中的操作数据的方法跟在Redis客户端中操作的方法有大部分都是一模一样的，我们可以在IDE中查看具体的函数进行调用，也可以去官网查看相应的文档进行操作。</p>
+<h3 id="String操作"><a href="#String操作" class="headerlink" title="String操作"></a>String操作</h3><div class="table-container">
+<table>
 <thead>
-<tr class="header">
+<tr>
 <th>方法</th>
 <th>作用</th>
 <th>示例</th>
@@ -204,96 +192,97 @@
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>set(name, value)</td>
 <td>给name赋值为value</td>
-<td>redis.set('name', 'Bob')</td>
+<td>redis.set(‘name’, ‘Bob’)</td>
 <td>True</td>
 </tr>
-<tr class="even">
+<tr>
 <td>get(name)</td>
 <td>返回数据库中key为name的string的value</td>
-<td>redis.get('name')</td>
-<td>b'Bob'</td>
+<td>redis.get(‘name’)</td>
+<td>b’Bob’</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>getset(name, value)</td>
 <td>给数据库中key为name的string赋予值value并返回上次的value</td>
-<td>redis.getset('name', 'Mike')</td>
-<td>b'Bob'</td>
+<td>redis.getset(‘name’, ‘Mike’)</td>
+<td>b’Bob’</td>
 </tr>
-<tr class="even">
+<tr>
 <td>mget(keys, *args)</td>
 <td>返回多个key对应的value</td>
-<td>redis.mget(['name', 'nickname'])</td>
-<td>[b'Mike', b'Miker']</td>
+<td>redis.mget([‘name’, ‘nickname’])</td>
+<td>[b’Mike’, b’Miker’]</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>setnx(name, value)</td>
 <td>如果key不存在才设置value</td>
-<td>redis.setnx('newname', 'James')</td>
+<td>redis.setnx(‘newname’, ‘James’)</td>
 <td>第一次运行True，第二次False</td>
 </tr>
-<tr class="even">
+<tr>
 <td>setex(name, time, value)</td>
 <td>设置可以对应的值为string类型的value，并指定此键值对应的有效期</td>
-<td>redis.setex('name', 1, 'James')</td>
+<td>redis.setex(‘name’, 1, ‘James’)</td>
 <td>True</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>setrange(name, offset, value)</td>
 <td>设置指定key的value值的子字符串</td>
-<td>redis.set('name', 'Hello') redis.setrange('name', 6, 'World')</td>
+<td>redis.set(‘name’, ‘Hello’) redis.setrange(‘name’, 6, ‘World’)</td>
 <td>11，修改后的字符串长度</td>
 </tr>
-<tr class="even">
+<tr>
 <td>mset(mapping)</td>
 <td>批量赋值</td>
-<td>redis.mset({'name1': 'Durant', 'name2': 'James'})</td>
+<td>redis.mset({‘name1’: ‘Durant’, ‘name2’: ‘James’})</td>
 <td>True</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>msetnx(mapping)</td>
 <td>key均不存在时才批量赋值</td>
-<td>redis.msetnx({'name3': 'Smith', 'name4': 'Curry'})</td>
+<td>redis.msetnx({‘name3’: ‘Smith’, ‘name4’: ‘Curry’})</td>
 <td>True</td>
 </tr>
-<tr class="even">
+<tr>
 <td>incr(name, amount=1)</td>
 <td>key为name的value增值操作，默认1，key不存在则被创建并设为amount</td>
-<td>redis.incr('age', 1)</td>
+<td>redis.incr(‘age’, 1)</td>
 <td>1，即修改后的值</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>decr(name, amount=1)</td>
 <td>key为name的value减值操作，默认1，key不存在则被创建并设置为-amount</td>
-<td>redis.decr('age', 1)</td>
+<td>redis.decr(‘age’, 1)</td>
 <td>-1，即修改后的值</td>
 </tr>
-<tr class="even">
+<tr>
 <td>append(key, value)</td>
 <td>key为name的string的值附加value</td>
-<td>redis.append('nickname', 'OK')</td>
+<td>redis.append(‘nickname’, ‘OK’)</td>
 <td>13，即修改后的字符串长度</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>substr(name, start, end=-1)</td>
 <td>返回key为name的string的value的子串</td>
-<td>redis.substr('name', 1, 4)</td>
-<td>b'ello'</td>
+<td>redis.substr(‘name’, 1, 4)</td>
+<td>b’ello’</td>
 </tr>
-<tr class="even">
+<tr>
 <td>getrange(key, start, end)</td>
 <td>获取key的value值从start到end的子字符串</td>
-<td>redis.getrange('name', 1, 4)</td>
-<td>b'ello'</td>
+<td>redis.getrange(‘name’, 1, 4)</td>
+<td>b’ello’</td>
 </tr>
 </tbody>
 </table>
-<h3 id="key操作">Key操作</h3>
+</div>
+<h3 id="Key操作"><a href="#Key操作" class="headerlink" title="Key操作"></a>Key操作</h3><div class="table-container">
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>方法</th>
 <th>作用</th>
 <th>示例</th>
@@ -301,73 +290,73 @@
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>exists(name)</td>
 <td>判断一个key是否存在</td>
-<td>redis.exists('name')</td>
+<td>redis.exists(‘name’)</td>
 <td>True</td>
 </tr>
-<tr class="even">
+<tr>
 <td>delete(name)</td>
 <td>删除一个key</td>
-<td>redis.delete('name')</td>
+<td>redis.delete(‘name’)</td>
 <td>1</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>type(name)</td>
 <td>判断key类型</td>
-<td>redis.type('name')</td>
-<td>b'string'</td>
+<td>redis.type(‘name’)</td>
+<td>b’string’</td>
 </tr>
-<tr class="even">
+<tr>
 <td>keys(pattern)</td>
 <td>获取所有符合规则的key</td>
-<td>redis.keys('n*')</td>
-<td>[b'name']</td>
+<td>redis.keys(‘n*’)</td>
+<td>[b’name’]</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>randomkey()</td>
 <td>获取随机的一个key</td>
 <td>randomkey()</td>
-<td>b'name'</td>
+<td>b’name’</td>
 </tr>
-<tr class="even">
+<tr>
 <td>rename(src, dst)</td>
 <td>将key重命名</td>
-<td>redis.rename('name', 'nickname')</td>
+<td>redis.rename(‘name’, ‘nickname’)</td>
 <td>True</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>dbsize()</td>
 <td>获取当前数据库中key的数目</td>
 <td>dbsize()</td>
 <td>100</td>
 </tr>
-<tr class="even">
+<tr>
 <td>expire(name, time)</td>
 <td>设定key的过期时间，单位秒</td>
-<td>redis.expire('name', 2)</td>
+<td>redis.expire(‘name’, 2)</td>
 <td>True</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>ttl(name)</td>
 <td>获取key的过期时间，单位秒，-1为永久不过期</td>
-<td>redis.ttl('name')</td>
+<td>redis.ttl(‘name’)</td>
 <td>-1</td>
 </tr>
-<tr class="even">
+<tr>
 <td>move(name, db)</td>
 <td>将key移动到其他数据库</td>
-<td>move('name', 2)</td>
+<td>move(‘name’, 2)</td>
 <td>True</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>flushdb()</td>
 <td>删除当前选择数据库中的所有key</td>
 <td>flushdb()</td>
 <td>True</td>
 </tr>
-<tr class="even">
+<tr>
 <td>flushall()</td>
 <td>删除所有数据库中的所有key</td>
 <td>flushall()</td>
@@ -375,17 +364,11 @@
 </tr>
 </tbody>
 </table>
-<h3 id="list操作">List操作</h3>
-<table style="width:28%;">
-<colgroup>
-<col width="5%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
-</colgroup>
+</div>
+<h3 id="List操作"><a href="#List操作" class="headerlink" title="List操作"></a>List操作</h3><div class="table-container">
+<table>
 <thead>
-<tr class="header">
+<tr>
 <th>方法</th>
 <th>作用</th>
 <th>示例</th>
@@ -393,97 +376,91 @@
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>rpush(name, *values)</td>
 <td>在key为name的list尾添加值为value的元素，可以传多个</td>
-<td>redis.rpush('list', 1, 2, 3)</td>
+<td>redis.rpush(‘list’, 1, 2, 3)</td>
 <td>3，list大小</td>
 </tr>
-<tr class="even">
+<tr>
 <td>lpush(name, *values)</td>
 <td>在key为name的list头添加值为value的元素，可以传多个</td>
-<td>redis.lpush('list', 0)</td>
+<td>redis.lpush(‘list’, 0)</td>
 <td>4，list大小</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>llen(name)</td>
 <td>返回key为name的list的长度</td>
-<td>redis.llen('list')</td>
+<td>redis.llen(‘list’)</td>
 <td>4</td>
 </tr>
-<tr class="even">
+<tr>
 <td>lrange(name, start, end)</td>
 <td>返回key为name的list中start至end之间的元素</td>
-<td>redis.lrange('list', 1, 3)</td>
-<td>[b'3', b'2', b'1']</td>
+<td>redis.lrange(‘list’, 1, 3)</td>
+<td>[b’3’, b’2’, b’1’]</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>ltrim(name, start, end)</td>
 <td>截取key为name的list，保留索引为start到end的内容</td>
-<td>ltrim('list', 1, 3)</td>
+<td>ltrim(‘list’, 1, 3)</td>
 <td>True</td>
 </tr>
-<tr class="even">
+<tr>
 <td>lindex(name, index)</td>
 <td>返回key为name的list中index位置的元素</td>
-<td>redis.lindex('list', 1)</td>
-<td>b'2'</td>
+<td>redis.lindex(‘list’, 1)</td>
+<td>b’2’</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>lset(name, index, value)</td>
 <td>给key为name的list中index位置的元素赋值，越界则报错</td>
-<td>redis.lset('list', 1, 5)</td>
+<td>redis.lset(‘list’, 1, 5)</td>
 <td>True</td>
 </tr>
-<tr class="even">
+<tr>
 <td>lrem(name, count, value)</td>
 <td>删除count个key的list中值为value的元素</td>
-<td>redis.lrem('list', 2, 3)</td>
+<td>redis.lrem(‘list’, 2, 3)</td>
 <td>1，即删除的个数</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>lpop(name)</td>
 <td>返回并删除key为name的list中的首元素</td>
-<td>redis.lpop('list')</td>
-<td>b'5'</td>
+<td>redis.lpop(‘list’)</td>
+<td>b’5’</td>
 </tr>
-<tr class="even">
+<tr>
 <td>rpop(name)</td>
 <td>返回并删除key为name的list中的尾元素</td>
-<td>redis.rpop('list')</td>
-<td>b'2'</td>
+<td>redis.rpop(‘list’)</td>
+<td>b’2’</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>blpop(keys, timeout=0)</td>
 <td>返回并删除名称为在keys中的list中的首元素，如果list为空，则会一直阻塞等待</td>
-<td>redis.blpop('list')</td>
-<td>[b'5']</td>
+<td>redis.blpop(‘list’)</td>
+<td>[b’5’]</td>
 </tr>
-<tr class="even">
+<tr>
 <td>brpop(keys, timeout=0)</td>
 <td>返回并删除key为name的list中的尾元素，如果list为空，则会一直阻塞等待</td>
-<td>redis.brpop('list')</td>
-<td>[b'2']</td>
+<td>redis.brpop(‘list’)</td>
+<td>[b’2’]</td>
 </tr>
-<tr class="odd">
-<td>rpoplpush(src, dst)</td>
+<tr>
+<td> rpoplpush(src, dst)</td>
 <td>返回并删除名称为src的list的尾元素，并将该元素添加到名称为dst的list的头部</td>
-<td>redis.rpoplpush('list', 'list2')</td>
-<td>b'2'</td>
+<td>redis.rpoplpush(‘list’, ‘list2’)</td>
+<td>b’2’</td>
 </tr>
 </tbody>
 </table>
-<h3 id="set操作">Set操作</h3>
-<table style="width:28%;">
-<colgroup>
-<col width="5%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
-</colgroup>
+</div>
+<h3 id="Set操作"><a href="#Set操作" class="headerlink" title="Set操作"></a>Set操作</h3><div class="table-container">
+<table>
 <thead>
-<tr class="header">
+<tr>
 <th>方法</th>
 <th>作用</th>
 <th>示例</th>
@@ -491,103 +468,97 @@
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>sadd(name, *values)</td>
 <td>向key为name的set中添加元素</td>
-<td>redis.sadd('tags', 'Book', 'Tea', 'Coffee')</td>
+<td>redis.sadd(‘tags’, ‘Book’, ‘Tea’, ‘Coffee’)</td>
 <td>3，即插入的数据个数</td>
 </tr>
-<tr class="even">
+<tr>
 <td>srem(name, *values)</td>
 <td>从key为name的set中删除元素</td>
-<td>redis.srem('tags', 'Book')</td>
+<td>redis.srem(‘tags’, ‘Book’)</td>
 <td>1，即删除的数据个数</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>spop(name)</td>
 <td>随机返回并删除key为name的set中一个元素</td>
-<td>redis.spop('tags')</td>
-<td>b'Tea'</td>
+<td>redis.spop(‘tags’)</td>
+<td>b’Tea’</td>
 </tr>
-<tr class="even">
+<tr>
 <td>smove(src, dst, value)</td>
 <td>从src对应的set中移除元素并添加到dst对应的set中</td>
-<td>redis.smove('tags', 'tags2', 'Coffee')</td>
+<td>redis.smove(‘tags’, ‘tags2’, ‘Coffee’)</td>
 <td>True</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>scard(name)</td>
 <td>返回key为name的set的元素个数</td>
-<td>redis.scard('tags')</td>
+<td>redis.scard(‘tags’)</td>
 <td>3</td>
 </tr>
-<tr class="even">
+<tr>
 <td>sismember(name, value)</td>
 <td>测试member是否是key为name的set的元素</td>
-<td>redis.sismember('tags', 'Book')</td>
+<td>redis.sismember(‘tags’, ‘Book’)</td>
 <td>True</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>sinter(keys, *args)</td>
 <td>返回所有给定key的set的交集</td>
-<td>redis.sinter(['tags', 'tags2'])</td>
-<td>{b'Coffee'}</td>
+<td>redis.sinter([‘tags’, ‘tags2’])</td>
+<td>{b’Coffee’}</td>
 </tr>
-<tr class="even">
+<tr>
 <td>sinterstore(dest, keys, *args)</td>
 <td>求交集并将交集保存到dest的集合</td>
-<td>redis.sinterstore('inttag', ['tags', 'tags2'])</td>
+<td>redis.sinterstore(‘inttag’, [‘tags’, ‘tags2’])</td>
 <td>1</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>sunion(keys, *args)</td>
 <td>返回所有给定key的set的并集</td>
-<td>redis.sunion(['tags', 'tags2'])</td>
-<td>{b'Coffee', b'Book', b'Pen'}</td>
+<td>redis.sunion([‘tags’, ‘tags2’])</td>
+<td>{b’Coffee’, b’Book’, b’Pen’}</td>
 </tr>
-<tr class="even">
+<tr>
 <td>sunionstore(dest, keys, *args)</td>
 <td>求并集并将并集保存到dest的集合</td>
-<td>redis.sunionstore('inttag', ['tags', 'tags2'])</td>
+<td>redis.sunionstore(‘inttag’, [‘tags’, ‘tags2’])</td>
 <td>3</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>sdiff(keys, *args)</td>
 <td>返回所有给定key的set的差集</td>
-<td>redis.sdiff(['tags', 'tags2'])</td>
-<td>{b'Book', b'Pen'}</td>
+<td>redis.sdiff([‘tags’, ‘tags2’])</td>
+<td>{b’Book’, b’Pen’}</td>
 </tr>
-<tr class="even">
+<tr>
 <td>sdiffstore(dest, keys, *args)</td>
 <td>求差集并将差集保存到dest的集合</td>
-<td>redis.sdiffstore('inttag', ['tags', 'tags2'])</td>
+<td>redis.sdiffstore(‘inttag’, [‘tags’, ‘tags2’])</td>
 <td>3</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>smembers(name)</td>
 <td>返回key为name的set的所有元素</td>
-<td>redis.smembers('tags')</td>
-<td>{b'Pen', b'Book', b'Coffee'}</td>
+<td>redis.smembers(‘tags’)</td>
+<td>{b’Pen’, b’Book’, b’Coffee’}</td>
 </tr>
-<tr class="even">
+<tr>
 <td>srandmember(name)</td>
 <td>随机返回key为name的set的一个元素，但不删除元素</td>
-<td>redis.srandmember('tags')</td>
+<td>redis.srandmember(‘tags’)</td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<h3 id="sorted-set操作">Sorted Set操作</h3>
-<table style="width:28%;">
-<colgroup>
-<col width="5%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
-</colgroup>
+</div>
+<h3 id="Sorted-Set操作"><a href="#Sorted-Set操作" class="headerlink" title="Sorted Set操作"></a>Sorted Set操作</h3><div class="table-container">
+<table>
 <thead>
-<tr class="header">
+<tr>
 <th>方法</th>
 <th>作用</th>
 <th>示例</th>
@@ -595,85 +566,79 @@
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>zadd(name, args, *kwargs)</td>
 <td>向key为name的zset中添加元素member，score用于排序。如果该元素存在，则更新其顺序</td>
-<td>redis.zadd('grade', 100, 'Bob', 98, 'Mike')</td>
+<td>redis.zadd(‘grade’, 100, ‘Bob’, 98, ‘Mike’)</td>
 <td>2，即添加的元素个数</td>
 </tr>
-<tr class="even">
+<tr>
 <td>zrem(name, *values)</td>
 <td>删除key为name的zset中的元素</td>
-<td>redis.zrem('grade', 'Mike')</td>
+<td>redis.zrem(‘grade’, ‘Mike’)</td>
 <td>1，即删除的元素个数</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>zincrby(name, value, amount=1)</td>
 <td>如果在key为name的zset中已经存在元素value，则该元素的score增加amount，否则向该集合中添加该元素，其score的值为amount</td>
-<td>redis.zincrby('grade', 'Bob', -2)</td>
+<td>redis.zincrby(‘grade’, ‘Bob’, -2)</td>
 <td>98.0，即修改后的值</td>
 </tr>
-<tr class="even">
+<tr>
 <td>zrank(name, value)</td>
 <td>返回key为name的zset中元素的排名（按score从小到大排序）即下标</td>
-<td>redis.zrank('grade', 'Amy')</td>
+<td>redis.zrank(‘grade’, ‘Amy’)</td>
 <td>1</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>zrevrank(name, value)</td>
 <td>返回key为name的zset中元素的倒数排名（按score从大到小排序）即下标</td>
-<td>redis.zrevrank('grade', 'Amy')</td>
+<td>redis.zrevrank(‘grade’, ‘Amy’)</td>
 <td>2</td>
 </tr>
-<tr class="even">
+<tr>
 <td>zrevrange(name, start, end, withscores=False)</td>
 <td>返回key为name的zset（按score从大到小排序）中的index从start到end的所有元素</td>
-<td>redis.zrevrange('grade', 0, 3)</td>
-<td>[b'Bob', b'Mike', b'Amy', b'James']</td>
+<td>redis.zrevrange(‘grade’, 0, 3)</td>
+<td>[b’Bob’, b’Mike’, b’Amy’, b’James’]</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>zrangebyscore(name, min, max, start=None, num=None, withscores=False)</td>
 <td>返回key为name的zset中score在给定区间的元素</td>
-<td>redis.zrangebyscore('grade', 80, 95)</td>
-<td>[b'Amy', b'James']</td>
+<td>redis.zrangebyscore(‘grade’, 80, 95)</td>
+<td>[b’Amy’, b’James’]</td>
 </tr>
-<tr class="even">
+<tr>
 <td>zcount(name, min, max)</td>
 <td>返回key为name的zset中score在给定区间的数量</td>
-<td>redis.zcount('grade', 80, 95)</td>
+<td>redis.zcount(‘grade’, 80, 95)</td>
 <td>2</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>zcard(name)</td>
 <td>返回key为name的zset的元素个数</td>
-<td>redis.zcard('grade')</td>
+<td>redis.zcard(‘grade’)</td>
 <td>3</td>
 </tr>
-<tr class="even">
+<tr>
 <td>zremrangebyrank(name, min, max)</td>
 <td>删除key为name的zset中排名在给定区间的元素</td>
-<td>redis.zremrangebyrank('grade', 0, 0)</td>
+<td>redis.zremrangebyrank(‘grade’, 0, 0)</td>
 <td>1，即删除的元素个数</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>zremrangebyscore(name, min, max)</td>
 <td>删除key为name的zset中score在给定区间的元素</td>
-<td>redis.zremrangebyscore('grade', 80, 90)</td>
+<td>redis.zremrangebyscore(‘grade’, 80, 90)</td>
 <td>1，即删除的元素个数</td>
 </tr>
 </tbody>
 </table>
-<h3 id="hash操作">Hash操作</h3>
-<table style="width:28%;">
-<colgroup>
-<col width="5%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
-</colgroup>
+</div>
+<h3 id="Hash操作"><a href="#Hash操作" class="headerlink" title="Hash操作"></a>Hash操作</h3><div class="table-container">
+<table>
 <thead>
-<tr class="header">
+<tr>
 <th>方法</th>
 <th>作用</th>
 <th>示例</th>
@@ -681,88 +646,89 @@
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>hset(name, key, value)</td>
 <td>向key为name的hash中添加映射</td>
-<td>hset('price', 'cake', 5)</td>
+<td>hset(‘price’, ‘cake’, 5)</td>
 <td>1，即添加的映射个数</td>
 </tr>
-<tr class="even">
+<tr>
 <td>hsetnx(name, key, value)</td>
 <td>向key为name的hash中添加映射，如果映射键名不存在</td>
-<td>hsetnx('price', 'book', 6)</td>
+<td>hsetnx(‘price’, ‘book’, 6)</td>
 <td>1，即添加的映射个数</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>hget(name, key)</td>
 <td>返回key为name的hash中field对应的value</td>
-<td>redis.hget('price', 'cake')</td>
+<td>redis.hget(‘price’, ‘cake’)</td>
 <td>5</td>
 </tr>
-<tr class="even">
+<tr>
 <td>hmget(name, keys, *args)</td>
 <td>返回key为name的hash中各个键对应的value</td>
-<td>redis.hmget('price', ['apple', 'orange'])</td>
-<td>[b'3', b'7']</td>
+<td>redis.hmget(‘price’, [‘apple’, ‘orange’])</td>
+<td>[b’3’, b’7’]</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>hmset(name, mapping)</td>
 <td>向key为name的hash中批量添加映射</td>
-<td>redis.hmset('price', {'banana': 2, 'pear': 6})</td>
+<td>redis.hmset(‘price’, {‘banana’: 2, ‘pear’: 6})</td>
 <td>True</td>
 </tr>
-<tr class="even">
+<tr>
 <td>hincrby(name, key, amount=1)</td>
 <td>将key为name的hash中映射的value增加amount</td>
-<td>redis.hincrby('price', 'apple', 3)</td>
+<td>redis.hincrby(‘price’, ‘apple’, 3)</td>
 <td>6，修改后的值</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>hexists(name, key)</td>
 <td>key为namehash中是否存在键名为key的映射</td>
-<td>redis.hexists('price', 'banana')</td>
+<td>redis.hexists(‘price’, ‘banana’)</td>
 <td>True</td>
 </tr>
-<tr class="even">
+<tr>
 <td>hdel(name, *keys)</td>
 <td>key为namehash中删除键名为key的映射</td>
-<td>redis.hdel('price', 'banana')</td>
+<td>redis.hdel(‘price’, ‘banana’)</td>
 <td>True</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>hlen(name)</td>
 <td>从key为name的hash中获取映射个数</td>
-<td>redis.hlen('price')</td>
+<td>redis.hlen(‘price’)</td>
 <td>6</td>
 </tr>
-<tr class="even">
+<tr>
 <td>hkeys(name)</td>
 <td>从key为name的hash中获取所有映射键名</td>
-<td>redis.hkeys('price')</td>
-<td>[b'cake', b'book', b'banana', b'pear']</td>
+<td>redis.hkeys(‘price’)</td>
+<td>[b’cake’, b’book’, b’banana’, b’pear’]</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>hvals(name)</td>
 <td>从key为name的hash中获取所有映射键值</td>
-<td>redis.hvals('price')</td>
-<td>[b'5', b'6', b'2', b'6']</td>
+<td>redis.hvals(‘price’)</td>
+<td>[b’5’, b’6’, b’2’, b’6’]</td>
 </tr>
-<tr class="even">
+<tr>
 <td>hgetall(name)</td>
 <td>从key为name的hash中获取所有映射键值对</td>
-<td>redis.hgetall('price')</td>
-<td>{b'cake': b'5', b'book': b'6', b'orange': b'7', b'pear': b'6'}</td>
+<td>redis.hgetall(‘price’)</td>
+<td>{b’cake’: b’5’, b’book’: b’6’, b’orange’: b’7’, b’pear’: b’6’}</td>
 </tr>
 </tbody>
 </table>
-<h3 id="redisdump">RedisDump</h3>
-<ul>
-<li><p>redis-load 将数据导入到数据库中</p></li>
-<li><p>redis-dump 将数据库信息导出</p></li>
+</div>
+<h3 id="RedisDump"><a href="#RedisDump" class="headerlink" title="RedisDump"></a>RedisDump</h3><ul>
+<li><p>redis-load<br>将数据导入到数据库中</p>
+</li>
+<li><p>redis-dump<br>将数据库信息导出</p>
+</li>
 </ul>
-<p>       到这里差不多Python操作Redis就可以了，呀，又到半夜12点多了，虽然还是有很多的不太熟悉的地方，但是在总结过程中还是深化了不少东西，所以还是要多做总结建立自己的知识体系，当然这只是自己的学习方式，不喜就喷我啊，来给我看看你有什么好的方法，嘿嘿～～</p>
-<h4 id="stay-hungrystay-foolishstay-yourself......">Stay hungry,Stay foolish,Stay yourself......</h4>
-
+<p>&#160; &#160; &#160; &#160;到这里差不多Python操作Redis就可以了，呀，又到半夜12点多了，虽然还是有很多的不太熟悉的地方，但是在总结过程中还是深化了不少东西，所以还是要多做总结建立自己的知识体系，当然这只是自己的学习方式，不喜就喷我啊，来给我看看你有什么好的方法，嘿嘿～～</p>
+<h4 id="Stay-hungry-Stay-foolish-Stay-yourself……"><a href="#Stay-hungry-Stay-foolish-Stay-yourself……" class="headerlink" title="Stay hungry,Stay foolish,Stay yourself……"></a>Stay hungry,Stay foolish,Stay yourself……</h4>
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>
