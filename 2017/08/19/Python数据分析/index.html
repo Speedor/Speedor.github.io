@@ -160,746 +160,738 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>&#160; &#160; &#160; &#160;因为工作上一直在跟数据打交道，无论是定向爬虫还是数据量化，总是以Python为核心，Python只是一种工具，其他工具的使用也无可厚非，在使用的过程中也感受到了花费更多的时间关注于问题本身而非其他的问题的快感，在看了《利用Python进行数据分析》这本书后更是深深体会到了Python的强大，这本书的作者就是Pandas库的作者，作者真的很走心，在贯穿数据处理的同时，不仅讲解了Numpy、Pandas而且也用实际的股票数据进行分析，良心书单推荐值得一看。今天把之前做的笔记稍微整理了一下再次做一下总结，主要是Numpy和Pandas的基本使用和常规用法，来，喷我～～</p>
-<h4 id="NumPy简介"><a href="#NumPy简介" class="headerlink" title="NumPy简介"></a>NumPy简介</h4><p>&#160; &#160; &#160; &#160;老样子，来<font color="#000"><b><a href="http://www.numpy.org/" target="_blank" rel="noopener">官网</a></b></font>走一波，Numpy的官网给我的感觉是最舒服的(可能我见识短吧0.0)，蓝色的基调搭配例子的详解，很容易就能学会很多他的用法，而且但是想要深入的话也是要花点时间精力的，不过相信聪明的你很快也是可以学会的。</p>
-<p>&#160; &#160; &#160; &#160;NumPy是高性能的科学计算和数据分析的基础包。说白了就是用来处理数值数据，无非就是加减乘除，不过这里面向的对象是多维数组，当然最常见还是二维数组，也就是类似于表格数值形式的数据，有没有想到矩阵？在Numpy中，数组(ndarray)和矩阵(matrix)是存在不同数据类型的，而且计算也有点区别，要注意了哦。饭得一口一口吃，我们还是一点一点学吧。</p>
-<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>&#160; &#160; &#160; &#160;Numpy的安装其实很简单，只要pip install 就好，在这里推荐用<b>Anaconda3.x以上版本</b>。他是一个开源的Python发行版本，其包含了conda、Python等180多个科学包及其依赖项。因为包含了大量的科学包，Anaconda 的<font color="#000"><b><a href="https://www.anaconda.com/download/" target="_blank" rel="noopener">下载文件</a></b></font>比较大（约 515 MB），如果只需要某些包，或者需要节省带宽或存储空间，也可以使用Miniconda这个较小的发行版（仅包含conda和 Python）。Anaconda3.x中包含了Python3.x，因为2020年Python社区对2.7的更新会停止，所以我们还是早点适应Python3.0的环境比较好一点儿。更重要的是Anaconda中包含了Jupyter NoteBook、Numpy、Pandas等一系列众多科学计算常用库，所以只需安装Anaconda我们就可以直接使用，是不是很方便，而且安装也很简单，大家可以自行下载安装。</p>
+      		<p>       因为工作上一直在跟数据打交道，无论是定向爬虫还是数据量化，总是以Python为核心，Python只是一种工具，其他工具的使用也无可厚非，在使用的过程中也感受到了花费更多的时间关注于问题本身而非其他的问题的快感，在看了《利用Python进行数据分析》这本书后更是深深体会到了Python的强大，这本书的作者就是Pandas库的作者，作者真的很走心，在贯穿数据处理的同时，不仅讲解了Numpy、Pandas而且也用实际的股票数据进行分析，良心书单推荐值得一看。今天把之前做的笔记稍微整理了一下再次做一下总结，主要是Numpy和Pandas的基本使用和常规用法，来，喷我～～</p>
+<h4 id="numpy简介">NumPy简介</h4>
+<p>       老样子，来<font color="#000"><b><a href="http://www.numpy.org/" target="_blank" rel="noopener">官网</a></b></font>走一波，Numpy的官网给我的感觉是最舒服的(可能我见识短吧0.0)，蓝色的基调搭配例子的详解，很容易就能学会很多他的用法，而且但是想要深入的话也是要花点时间精力的，不过相信聪明的你很快也是可以学会的。</p>
+<p>       NumPy是高性能的科学计算和数据分析的基础包。说白了就是用来处理数值数据，无非就是加减乘除，不过这里面向的对象是多维数组，当然最常见还是二维数组，也就是类似于表格数值形式的数据，有没有想到矩阵？在Numpy中，数组(ndarray)和矩阵(matrix)是存在不同数据类型的，而且计算也有点区别，要注意了哦。饭得一口一口吃，我们还是一点一点学吧。</p>
+<h4 id="安装">安装</h4>
+<p>       Numpy的安装其实很简单，只要pip install 就好，在这里推荐用<b>Anaconda3.x以上版本</b>。他是一个开源的Python发行版本，其包含了conda、Python等180多个科学包及其依赖项。因为包含了大量的科学包，Anaconda 的<font color="#000"><b><a href="https://www.anaconda.com/download/" target="_blank" rel="noopener">下载文件</a></b></font>比较大（约 515 MB），如果只需要某些包，或者需要节省带宽或存储空间，也可以使用Miniconda这个较小的发行版（仅包含conda和 Python）。Anaconda3.x中包含了Python3.x，因为2020年Python社区对2.7的更新会停止，所以我们还是早点适应Python3.0的环境比较好一点儿。更重要的是Anaconda中包含了Jupyter NoteBook、Numpy、Pandas等一系列众多科学计算常用库，所以只需安装Anaconda我们就可以直接使用，是不是很方便，而且安装也很简单，大家可以自行下载安装。</p>
 <p>NumPy中数数值的基本类型：</p>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>基本类型</th>
 <th>类型代码</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>int8、uint8</td>
 <td>i1、u1</td>
 <td>有符号和无符号8位整型（1字节）</td>
 </tr>
-<tr>
+<tr class="even">
 <td>int16、uint16</td>
 <td>i2、u2</td>
 <td>有符号和无符号16位整型（2字节）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>int32、uint32</td>
 <td>i4、u4</td>
 <td>有符号和无符号32位整型（4字节）</td>
 </tr>
-<tr>
+<tr class="even">
 <td>int64、uint64</td>
 <td>i8、u8</td>
 <td>有符号和无符号64位整型（8字节）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>float16</td>
 <td>f2</td>
 <td>半精度浮点数</td>
 </tr>
-<tr>
+<tr class="even">
 <td>float32</td>
 <td>f4、f</td>
 <td>单精度浮点数</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>float64</td>
 <td>f8、d</td>
 <td>双精度浮点数</td>
 </tr>
-<tr>
+<tr class="even">
 <td>float128</td>
 <td>f16、g</td>
 <td>扩展精度浮点数</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>complex64</td>
 <td>c8</td>
 <td>分别用两个32位表示的复数</td>
 </tr>
-<tr>
+<tr class="even">
 <td>complex128</td>
 <td>c16</td>
 <td>分别用两个64位表示的复数</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>complex256</td>
 <td>c32</td>
 <td>分别用两个128位表示的复数</td>
 </tr>
-<tr>
+<tr class="even">
 <td>bool</td>
 <td>?</td>
 <td>布尔型</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>object</td>
 <td>O</td>
 <td>python对象</td>
 </tr>
-<tr>
+<tr class="even">
 <td>string</td>
 <td>Sn</td>
 <td>固定长度字符串，每个字符1字节，如S10</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>unicode</td>
 <td>Un</td>
 <td>固定长度Unicode，字节数由系统决定，如U10</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
-<table>
+<p> </p>
+<table style="width:14%;">
+<colgroup>
+<col width="6%">
+<col width="6%">
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>生成函数</th>
 <th>作用</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>np.array( x)</td>
 <td>将输入数据转化为一个ndarray</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.array( x, dtype)</td>
 <td>将输入数据转化为一个类型为type的ndarray</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.asarray( array )</td>
 <td>将输入数据转化为一个新的（copy）ndarray</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.ones( N )</td>
 <td>生成一个N长度的一维全一ndarray</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.ones( N, dtype)</td>
 <td>生成一个N长度类型是dtype的一维全一ndarray</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.ones_like( ndarray )</td>
 <td>生成一个形状与参数相同的全一ndarray</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.zeros( N)</td>
 <td>生成一个N长度的一维全零ndarray</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.zeros( N, dtype)</td>
 <td>生成一个N长度类型位dtype的一维全零ndarray</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.zeros_like(ndarray)</td>
 <td>类似np.ones_like( ndarray )</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.empty( N )</td>
 <td>生成一个N长度的未初始化一维ndarray</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.empty( N, dtype)</td>
 <td>生成一个N长度类型是dtype的未初始化一维ndarray</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.empty(ndarray)</td>
 <td>类似np.ones_like( ndarray )</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.eye( N )</td>
 <td>创建一个N * N的单位矩阵（对角线为1，其余为0）</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.identity( N )</td>
 <td>只能获取方阵，也即标准意义的单位阵；</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.tile()</td>
 <td>重复某个数组。tile(A,n)A重复n次。tile(A,(m,n))A重复m行n列</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.arange( num)</td>
 <td>生成一个从0到num-1步数为1的一维ndarray</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.arange( begin, end)</td>
 <td>生成一个从begin到end-1步数为1的一维ndarray</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.arange( begin, end, step)</td>
 <td>生成一个从begin到end-step的步数为step的一维ndarray</td>
 </tr>
-<tr>
-<td>np.mershgrid(ndarray, ndarray,…)</td>
-<td>生成一个ndarray <em> ndarray </em> …的多维ndarray</td>
+<tr class="odd">
+<td>np.mershgrid(ndarray, ndarray,...)</td>
+<td>生成一个ndarray * ndarray * ...的多维ndarray</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.where(cond, ndarray1, ndarray2)</td>
 <td>根据条件cond，选取ndarray1或者ndarray2，返回一个新的ndarray</td>
 </tr>
-<tr>
-<td>np.in1d(ndarray, [x,y,…])</td>
-<td>检查ndarray中的元素是否等于[x,y,…]中的一个，返回bool数组</td>
+<tr class="odd">
+<td>np.in1d(ndarray, [x,y,...])</td>
+<td>检查ndarray中的元素是否等于[x,y,...]中的一个，返回bool数组</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>矩阵函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>np.diag( ndarray)</td>
 <td>以一维数组的形式返回方阵的对角线（或非对角线）元素</td>
 </tr>
-<tr>
-<td>np.diag( [x,y,…])</td>
+<tr class="even">
+<td>np.diag( [x,y,...])</td>
 <td>将一维数组转化为方阵（非对角线元素为0）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.dot(ndarray, ndarray)</td>
 <td>矩阵乘法</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.trace( ndarray)</td>
 <td>计算对角线元素的和</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>排序函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>np.sort( ndarray)</td>
 <td>排序，返回副本</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.unique(ndarray)</td>
 <td>返回ndarray中的元素，排除重复元素之后，并进行排序</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.intersect1d( ndarray1, ndarray2)</td>
 <td>返回二者的交集并排序。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.union1d( ndarray1, ndarray2)</td>
 <td>返回二者的并集并排序。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.setdiff1d( ndarray1, ndarray2)</td>
 <td>返回二者的差。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.setxor1d( ndarray1, ndarray2)</td>
 <td>返回二者的对称差</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>一元计算函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>np.abs(ndarray)</td>
 <td>计算绝对值</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.fabs(ndarray)</td>
 <td>计算绝对值（非复数）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.mean(ndarray)</td>
 <td>求平均值</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.sqrt(ndarray)</td>
 <td>计算x^0.5</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.square(ndarray)</td>
 <td>计算x^2</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.exp(ndarray)</td>
 <td>计算e^x</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>log、log10、log2、log1p</td>
 <td>计算自然对数、底为10的log、底为2的log、底为(1+x)的log</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.sign(ndarray)</td>
 <td>计算正负号：1（正）、0（0）、-1（负）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.ceil(ndarray)</td>
 <td>计算大于等于改值的最小整数</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.floor(ndarray)</td>
 <td>计算小于等于该值的最大整数</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.rind(ndarray)</td>
 <td>四舍五入到最近的整数，保留dtype</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.modf(ndarray)</td>
 <td>将数组的小数和整数部分以两个独立的数组方式返回</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.isnan(ndarray)</td>
 <td>返回一个判断是否是NaN的bool型数组</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.isfinite(ndarray)</td>
 <td>返回一个判断是否是有穷（非inf，非NaN）的bool型数组</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.isinf(ndarray)</td>
 <td>返回一个判断是否是无穷的bool型数组</td>
 </tr>
-<tr>
+<tr class="even">
 <td>cos、cosh、sin、sinh、tan、tanh</td>
 <td>普通型和双曲型三角函数</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>arccos、arccosh、arcsin、arcsinh、arctan、arctanh</td>
 <td>反三角函数和双曲型反三角函数</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.logical_not(ndarray)</td>
 <td>计算各元素not x的真值，相当于-ndarray</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>多元计算函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>np.add(ndarray, ndarray)</td>
 <td>相加</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.subtract(ndarray, ndarray)</td>
 <td>相减</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.multiply(ndarray, ndarray)</td>
 <td>乘法</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.divide(ndarray, ndarray)</td>
 <td>除法</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.floor_divide(ndarray, ndarray)</td>
 <td>圆整除法（丢弃余数）</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.power(ndarray, ndarray)</td>
 <td>次方</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.mod(ndarray, ndarray)</td>
 <td>求模</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.maximum(ndarray, ndarray)</td>
 <td>求最大值</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.fmax(ndarray, ndarray)</td>
 <td>求最大值（忽略NaN）</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.minimun(ndarray, ndarray)</td>
 <td>求最小值</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.fmin(ndarray, ndarray)</td>
 <td>求最小值（忽略NaN）</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.copysign(ndarray, ndarray)</td>
 <td>将参数2中的符号赋予参数1</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.greater(ndarray, ndarray)</td>
 <td>&gt;</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.greater_equal(ndarray, ndarray)</td>
 <td>&gt;=</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.less(ndarray, ndarray)</td>
 <td>&lt;</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.less_equal(ndarray, ndarray)</td>
 <td>&lt;=</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.equal(ndarray, ndarray)</td>
 <td>==</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.not_equal(ndarray, ndarray)</td>
 <td>!=</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>logical_and(ndarray, ndarray)</td>
 <td>&amp;</td>
 </tr>
-<tr>
+<tr class="even">
 <td>logical_or(ndarray, ndarray)</td>
 <td></td>
-<td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>logical_xor(ndarray, ndarray)</td>
 <td>^</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.dot( ndarray, ndarray)</td>
 <td>计算两个ndarray的矩阵内积</td>
 </tr>
-<tr>
-<td>np.ix_([x,y,m,n],…)</td>
+<tr class="odd">
+<td>np.ix_([x,y,m,n],...)</td>
 <td>生成一个索引器，用于Fancy indexing(花式索引)</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
-<table>
+<table style="width:14%;">
+<colgroup>
+<col width="6%">
+<col width="6%">
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>文件读写</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>np.save(string, ndarray)</td>
 <td>将ndarray保存到文件名为 [string].npy 的文件中（无压缩）</td>
 </tr>
-<tr>
-<td>np.savez(string, ndarray1, ndarray2, …)</td>
+<tr class="even">
+<td>np.savez(string, ndarray1, ndarray2, ...)</td>
 <td>将所有的ndarray压缩保存到文件名为[string].npy的文件中</td>
 </tr>
-<tr>
-<td>np.savetxt(sring, ndarray, fmt, newline=’\n’)</td>
+<tr class="odd">
+<td>np.savetxt(sring, ndarray, fmt, newline='')</td>
 <td>将ndarray写入文件，格式为fmt</td>
 </tr>
-<tr>
+<tr class="even">
 <td>np.load(string)</td>
 <td>读取文件名string的文件内容并转化为ndarray对象（或字典对象）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>np.loadtxt(string, delimiter)</td>
 <td>读取文件名string的文件内容，以delimiter为分隔符转化为ndarray</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
+<p> </p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>ndarray函数</th>
 <th>属性</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>ndarray.ndim</td>
 <td>获取ndarray的维数</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray.shape</td>
 <td>获取ndarray各个维度的长度</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray.dtype</td>
 <td>获取ndarray中元素的数据类型</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray.T</td>
 <td>简单转置矩阵ndarray</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
-<table>
+<table style="width:14%;">
+<colgroup>
+<col width="6%">
+<col width="6%">
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>ndarray函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>ndarray.astype(dtype)</td>
 <td>转换类型，若转换失败则会出现TypeError</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray.copy()</td>
 <td>复制一份ndarray(新的内存空间)</td>
 </tr>
-<tr>
-<td>ndarray.reshape((N,M,…))</td>
-<td>将ndarray转化为N<em>M</em>…的多维ndarray（非copy）</td>
+<tr class="odd">
+<td>ndarray.reshape((N,M,...))</td>
+<td>将ndarray转化为N<em>M</em>...的多维ndarray（非copy）</td>
 </tr>
-<tr>
-<td>ndarray.transpose((xIndex,yIndex,…))</td>
-<td>根据维索引xIndex,yIndex…进行矩阵转置，依赖于shape，不能用于一维矩阵（非copy）</td>
+<tr class="even">
+<td>ndarray.transpose((xIndex,yIndex,...))</td>
+<td>根据维索引xIndex,yIndex...进行矩阵转置，依赖于shape，不能用于一维矩阵（非copy）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray.swapaxes(xIndex,yIndex)</td>
 <td>交换维度（非copy）</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>计算函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>ndarray.mean( axis=0 )</td>
-<td>求平均值 </td>
+<td>求平均值 </td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray.sum( axis= 0)</td>
-<td>求和 </td>
+<td>求和 </td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray.cumsum( axis=0)</td>
-<td>累加 </td>
+<td>累加 </td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray.cumprod( axis=0)</td>
 <td>累乘</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray.std()</td>
 <td>方差</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray.var()</td>
 <td>标准差</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray.max()</td>
 <td>最大值</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray.min()</td>
 <td>最小值</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray.argmax()</td>
 <td>最大值索引</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray.argmin()</td>
 <td>最小值索引</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray.any()</td>
 <td>是否至少有一个True</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray.all()</td>
 <td>是否全部为True</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray.dot( ndarray)</td>
 <td>计算矩阵内积</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>排序函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>ndarray.sort(axis=0)</td>
-<td>排序，返回源数据 </td>
+<td>排序，返回源数据 </td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray[n]</td>
 <td>选取第n+1个元素</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray[n:m]</td>
 <td>选取第n+1到第m个元素</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray[:]</td>
 <td>选取全部元素</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray[n:]</td>
 <td>选取第n+1到最后一个元素</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray[:n]</td>
 <td>选取第0到第n个元素</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray[ bool_ndarray ]</td>
 <td>选取为true的元素.注：bool_ndarray表示bool类型的ndarray</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ndarray[[x,y,m,n]]</td>
 <td>选取顺序和序列为x、y、m、n的ndarray</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ndarray[n,m]</td>
 <td>选取第n+1行第m+1个元素</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>其他函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>seed()</td>
 <td>确定随机数生成种子</td>
 </tr>
-<tr>
+<tr class="even">
 <td>permutation(int)</td>
 <td>返回一个一维从0~9的序列的随机排列</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>permutation(ndarray)</td>
 <td>返回一个序列的随机排列</td>
 </tr>
-<tr>
+<tr class="even">
 <td>shuffle(ndarray)</td>
 <td>对一个序列就地随机排列</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>rand(int)</td>
 <td>产生int个均匀分布的样本值</td>
 </tr>
-<tr>
+<tr class="even">
 <td>randint(begin,end,num=1)</td>
 <td>从给定的begin和end随机选取num个整数</td>
 </tr>
-<tr>
-<td>randn(N, M, …)</td>
-<td>生成一个N<em>M</em>…的正态分布（平均值为0，标准差为1）的ndarray</td>
+<tr class="odd">
+<td>randn(N, M, ...)</td>
+<td>生成一个N<em>M</em>...的正态分布（平均值为0，标准差为1）的ndarray</td>
 </tr>
-<tr>
-<td>normal(size=(N,M,…))</td>
-<td>生成一个N<em>M</em>…的正态（高斯）分布的ndarray </td>
+<tr class="even">
+<td>normal(size=(N,M,...))</td>
+<td>生成一个N<em>M</em>...的正态（高斯）分布的ndarray </td>
 </tr>
-<tr>
+<tr class="odd">
 <td>beta(ndarray1,ndarray2)</td>
-<td>产生beta分布的样本值，参数必须大于0 </td>
+<td>产生beta分布的样本值，参数必须大于0 </td>
 </tr>
-<tr>
+<tr class="even">
 <td>chisquare()</td>
-<td>产生卡方分布的样本值 </td>
+<td>产生卡方分布的样本值 </td>
 </tr>
-<tr>
+<tr class="odd">
 <td>gamma()</td>
-<td>产生gamma分布的样本值 </td>
+<td>产生gamma分布的样本值 </td>
 </tr>
-<tr>
+<tr class="even">
 <td>uniform()</td>
-<td>产生在[0,1)中均匀分布的样本值 </td>
+<td>产生在[0,1)中均匀分布的样本值 </td>
 </tr>
-<tr>
+<tr class="odd">
 <td>det(ndarray)</td>
 <td>计算矩阵列式</td>
 </tr>
-<tr>
+<tr class="even">
 <td>eig(ndarray)</td>
 <td>计算方阵的本征值和本征向量</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>inv(ndarray)</td>
 <td>计算方阵的逆</td>
 </tr>
-<tr>
+<tr class="even">
 <td>pinv(ndarray)</td>
 <td>计算方阵的Moore-Penrose伪逆</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>qr(ndarray)</td>
-<td>计算qr分解 </td>
+<td>计算qr分解 </td>
 </tr>
-<tr>
+<tr class="even">
 <td>svd(ndarray)</td>
 <td>计算奇异值分解svd</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>solve(ndarray)</td>
-<td>解线性方程组Ax = b，其中A为方阵 </td>
+<td>解线性方程组Ax = b，其中A为方阵 </td>
 </tr>
-<tr>
+<tr class="even">
 <td>lstsq(ndarray)</td>
-<td>计算Ax=b的最小二乘解 </td>
+<td>计算Ax=b的最小二乘解 </td>
 </tr>
 </tbody>
 </table>
-</div>
-<p>&#160; &#160; &#160; &#160;其实对于以上函数虽然看起来多，但是实际也多0.0，这些函数的使用主要还是依赖于<b>矩阵</b>和<b>数组</b>的基本运算，尤其是numpy中的<font color="#000"><b><a href="https://docs.scipy.org/doc/numpy-dev/user/quickstart.html#broadcasting-rules" target="_blank" rel="noopener">广播运算</a></b></font>，这里大家可以去官网查看学习，本质上数据分析还是要求对量化数据的数学敏感性，至于计算无论是Python，R还是Matlab都是工具罢了，核心重点还是数学。</p>
-<h4 id="Stay-hungry-Stay-foolish-Stay-yourself……"><a href="#Stay-hungry-Stay-foolish-Stay-yourself……" class="headerlink" title="Stay hungry,Stay foolish,Stay yourself……"></a>Stay hungry,Stay foolish,Stay yourself……</h4>
+<p>       其实对于以上函数虽然看起来多，但是实际也多0.0，这些函数的使用主要还是依赖于<b>矩阵</b>和<b>数组</b>的基本运算，尤其是numpy中的<font color="#000"><b><a href="https://docs.scipy.org/doc/numpy-dev/user/quickstart.html#broadcasting-rules" target="_blank" rel="noopener">广播运算</a></b></font>，这里大家可以去官网查看学习，本质上数据分析还是要求对量化数据的数学敏感性，至于计算无论是Python，R还是Matlab都是工具罢了，核心重点还是数学。</p>
+<h4 id="stay-hungrystay-foolishstay-yourself......">Stay hungry,Stay foolish,Stay yourself......</h4>
+
             <div class="clearfix"></div>
             <hr class="nogutter">
         </div>

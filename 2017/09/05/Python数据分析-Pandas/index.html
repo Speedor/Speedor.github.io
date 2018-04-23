@@ -160,526 +160,516 @@
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		<p>&#160; &#160; &#160; &#160;一般说起来量化数据计算，往往除了Numpy就是<font color="#000"><b><a href="http://pandas.pydata.org/" target="_blank" rel="noopener">Pandas</a></b></font>，两者的存在相辅相成，解决了很多的数值计算的问题，Pandas实际上接触起来并不难，因为是基于NumPy的一种工具，是为了解决数据分析任务而产生的。所以说，熟悉了Numpy后再看Pandas就会简单很多，在这里呢还是要推荐《利用Python进行数据分析》，作者是Pandas库的作者，无论是中文版还是的还是英文版的看完都会有很大收获。Pandas的名称来自于面板数据（panel data）和python数据分析（data analysis）。panel data是经济学中关于多维数据集的一个术语，在Pandas中也提供了panel的数据类型。因为Pandas的数据类型相对来说少一点，在这里直接简单介绍一下。</p>
+      		<p>       一般说起来量化数据计算，往往除了Numpy就是<font color="#000"><b><a href="http://pandas.pydata.org/" target="_blank" rel="noopener">Pandas</a></b></font>，两者的存在相辅相成，解决了很多的数值计算的问题，Pandas实际上接触起来并不难，因为是基于NumPy的一种工具，是为了解决数据分析任务而产生的。所以说，熟悉了Numpy后再看Pandas就会简单很多，在这里呢还是要推荐《利用Python进行数据分析》，作者是Pandas库的作者，无论是中文版还是的还是英文版的看完都会有很大收获。Pandas的名称来自于面板数据（panel data）和python数据分析（data analysis）。panel data是经济学中关于多维数据集的一个术语，在Pandas中也提供了panel的数据类型。因为Pandas的数据类型相对来说少一点，在这里直接简单介绍一下。</p>
 <ul>
 <li>Series：一维数组，与Numpy中的一维array类似。二者与Python基本的数据结构List也很相近，其区别是：List中的元素可以是不同的数据类型，而Array和Series中则只允许存储相同的数据类型，这样可以更有效的使用内存，提高运算效率。</li>
 <li>DataFrame：二维的表格型数据结构。很多功能与R中的data.frame类似。可以将DataFrame理解为Series的容器。以下的内容主要以DataFrame为主。</li>
 <li>Panel ：三维的数组，可以理解为DataFrame的容器。</li>
 <li>Time- Series：以时间为索引的Series。</li>
 </ul>
-<p>&#160; &#160; &#160; &#160; 当然除了以上4种数据类型，还有最基础的dtypes：</p>
+<p>        当然除了以上4种数据类型，还有最基础的dtypes：</p>
 <ul>
 <li>float、int、bool、datetime64[ns]、datetime64[ns, tz]、timedelta[ns]、category、object</li>
 <li>默认的数据类型是int64,float64.</li>
 </ul>
 <hr>
-<h3 id="Series"><a href="#Series" class="headerlink" title="Series"></a>Series</h3><p>Series可以运用ndarray或字典的几乎所有索引操作和函数，融合了字典和ndarray的优点。</p>
-<div class="table-container">
+<h3 id="series">Series</h3>
+<p>Series可以运用ndarray或字典的几乎所有索引操作和函数，融合了字典和ndarray的优点。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>属性</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>values</td>
 <td>获取数组</td>
 </tr>
-<tr>
+<tr class="even">
 <td>index</td>
 <td>获取索引</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>name</td>
 <td>values的name</td>
 </tr>
-<tr>
+<tr class="even">
 <td>index.name</td>
 <td>索引的name</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
-<table>
+<table style="width:11%;">
+<colgroup>
+<col width="5%">
+<col width="5%">
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Series常用属性</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>Series([x,y,…])Series({‘a’:x,’b’:y,…}, index=param1)</td>
+<tr class="odd">
+<td>Series([x,y,...])Series({'a':x,'b':y,...}, index=param1)</td>
 <td>生成一个Series</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Series.copy()</td>
-<td>复制一个Series </td>
+<td>复制一个Series </td>
 </tr>
-<tr>
-<td>Series.reindex([x,y,…], fill_value=NaN)</td>
+<tr class="odd">
+<td>Series.reindex([x,y,...], fill_value=NaN)</td>
 <td>重返回一个适应新索引的新对象，将缺失值填充为fill_value</td>
 </tr>
-<tr>
-<td>Series.reindex([x,y,…], method=NaN)</td>
+<tr class="even">
+<td>Series.reindex([x,y,...], method=NaN)</td>
 <td>返回适应新索引的新对象，填充方式为method</td>
 </tr>
-<tr>
-<td>Series.reindex(columns=[x,y,…])</td>
+<tr class="odd">
+<td>Series.reindex(columns=[x,y,...])</td>
 <td>对列进行重新索引</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Series.drop(index)</td>
 <td>丢弃指定项</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Series.map(f)</td>
-<td>应用元素级函数 </td>
+<td>应用元素级函数 </td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>排序函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Series.sort_index(ascending=True)</td>
 <td>根据索引返回已排序的新对象</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Series.order(ascending=True)</td>
 <td>根据值返回已排序的对象，NaN值在末尾</td>
 </tr>
-<tr>
-<td>Series.rank(method=’average’, ascending=True, axis=0)</td>
+<tr class="odd">
+<td>Series.rank(method='average', ascending=True, axis=0)</td>
 <td>为各组分配一个平均排名</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.argmax()</td>
 <td>返回含有最大值的索引位置</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.argmin()</td>
 <td>返回含有最小值的索引位置</td>
 </tr>
 </tbody>
 </table>
-</div>
-<h3 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h3><p>&#160; &#160; &#160; &#160;DataFrame是一个表格型的数据结构，它含有一组有序的列，每列可以是不同的值类型（数值、字符串、布尔值等）。DataFrame既有行索引也有列索引，它可以被看做由Series组成的字典（共用同一个索引）。DataFrame可以通过类似字典的方式或者.columnname的方式将列获取为一个Series。行也可以通过位置或名称的方式进行获取。<br>为不存在的列赋值会创建新列。</p>
-<div class="table-container">
+<h3 id="dataframe">DataFrame</h3>
+<p>       DataFrame是一个表格型的数据结构，它含有一组有序的列，每列可以是不同的值类型（数值、字符串、布尔值等）。DataFrame既有行索引也有列索引，它可以被看做由Series组成的字典（共用同一个索引）。DataFrame可以通过类似字典的方式或者.columnname的方式将列获取为一个Series。行也可以通过位置或名称的方式进行获取。 为不存在的列赋值会创建新列。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>属性</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>values</td>
 <td>DataFrame的值</td>
 </tr>
-<tr>
+<tr class="even">
 <td>index</td>
 <td>行索引</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>index.name</td>
 <td>行索引的名字</td>
 </tr>
-<tr>
+<tr class="even">
 <td>columns</td>
 <td>列索引</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>columns.name</td>
 <td>列索引的名字</td>
 </tr>
-<tr>
+<tr class="even">
 <td>ix</td>
 <td>返回行的DataFrame</td>
 </tr>
-<tr>
-<td>ix[[x,y,…], [x,y,…]]</td>
+<tr class="odd">
+<td>ix[[x,y,...], [x,y,...]]</td>
 <td>对行重新索引，然后对列重新索引</td>
 </tr>
-<tr>
+<tr class="even">
 <td>T</td>
 <td>frame行列转置</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
-<table>
+<p> </p>
+<table style="width:11%;">
+<colgroup>
+<col width="5%">
+<col width="5%">
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>DataFrame常用属性</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>DataFrame(dict, columns=dict.index, index=[dict.columnnum])</td>
 <td>构建DataFrame</td>
 </tr>
-<tr>
+<tr class="even">
 <td>DataFrame(二维ndarray)</td>
 <td>数据矩阵，还可以传入行标和列标</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>DataFrame(由数组、列表或元组组成的字典)</td>
 <td>每个序列会变成DataFrame的一列。所有序列的长度必须相同</td>
 </tr>
-<tr>
+<tr class="even">
 <td>DataFrame(NumPy的结构化/记录数组)</td>
 <td>类似于“由数组组成的字典”</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>DataFrame(由Series组成的字典)</td>
 <td>每个Series会成为一列。如果没有显式制定索引，则各Series的索引会被合并成结果的行索引</td>
 </tr>
-<tr>
+<tr class="even">
 <td>DataFrame(由字典组成的字典)</td>
 <td>各内层字典会成为一列。键会被合并成结果的行索引。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>DataFrame(字典或Series的列表)</td>
 <td>各项将会成为DataFrame的一行。索引的并集会成为DataFrame的列标。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>DataFrame(由列表或元组组成的列表)</td>
 <td>类似于二维ndarray</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>DataFrame(DataFrame)</td>
 <td>沿用DataFrame</td>
 </tr>
-<tr>
+<tr class="even">
 <td>DataFrame(NumPy的MaskedArray)</td>
 <td>类似于二维ndarray，但掩码结果会变成NA/缺失值</td>
 </tr>
-<tr>
-<td>df.reindex([x,y,…], fill_value=NaN, limit)</td>
+<tr class="odd">
+<td>df.reindex([x,y,...], fill_value=NaN, limit)</td>
 <td>返回一个适应新索引的新对象，将缺失值填充为fill_value，最大填充量为limit</td>
 </tr>
-<tr>
-<td>df.reindex([x,y,…], method=NaN)</td>
+<tr class="even">
+<td>df.reindex([x,y,...], method=NaN)</td>
 <td>返回适应新索引的新对象，填充方式为method</td>
 </tr>
-<tr>
-<td>df.reindex([x,y,…], columns=[x,y,…],copy=True)</td>
+<tr class="odd">
+<td>df.reindex([x,y,...], columns=[x,y,...],copy=True)</td>
 <td>同时对行和列进行重新索引，默认复制新对象。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.drop(index, axis=0)</td>
 <td>丢弃指定轴上的指定项。</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>排序函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>df.sort_index(axis=0, ascending=True)</td>
 <td>根据索引排序</td>
 </tr>
-<tr>
-<td>df.sort_index(by=[a,b,…])</td>
+<tr class="even">
+<td>df.sort_index(by=[a,b,...])</td>
 <td>汇总统计函数</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>数学函数</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>df.count()</td>
 <td>非NaN的数量</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.describe()</td>
 <td>一次性产生多个汇总统计</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.min()</td>
 <td>最小值</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.min()</td>
 <td>最大值</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.idxmax(axis=0, skipna=True)</td>
 <td>返回含有最大值的index的Series</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.idxmin(axis=0, skipna=True)</td>
 <td>返回含有最小值的index的Series</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.quantile(axis=0)</td>
 <td>计算样本的分位数</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.sum(axis=0, skipna=True, level=NaN)</td>
 <td>返回一个含有求和小计的Series</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.mean(axis=0, skipna=True, level=NaN)</td>
 <td>返回一个含有平均值的Series</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.median(axis=0, skipna=True, level=NaN)</td>
 <td>返回一个含有算术中位数的Series</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.mad(axis=0, skipna=True, level=NaN)</td>
 <td>返回一个根据平均值计算平均绝对离差的Series</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.var(axis=0, skipna=True, level=NaN)</td>
 <td>返回一个方差的Series</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.std(axis=0, skipna=True, level=NaN)</td>
 <td>返回一个标准差的Series</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.skew(axis=0, skipna=True, level=NaN)</td>
 <td>返回样本值的偏度（三阶距）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.kurt(axis=0, skipna=True, level=NaN)</td>
 <td>返回样本值的峰度（四阶距）</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.cumsum(axis=0, skipna=True, level=NaN)</td>
 <td>返回样本的累计和</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.cummin(axis=0, skipna=True, level=NaN)</td>
 <td>返回样本的累计最大值</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.cummax(axis=0, skipna=True, level=NaN)</td>
 <td>返回样本的累计最小值</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.cumprod(axis=0, skipna=True, level=NaN)</td>
 <td>返回样本的累计积</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.diff(axis=0)</td>
 <td>返回样本的一阶差分</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.pct_change(axis=0)</td>
 <td>返回样本的百分比数变化</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>计算函数</th>
-<th>说明 </th>
+<th>说明 </th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>df.add(df2, fill_value=NaN, axist=1)</td>
-<td>元素级相加，对齐时找不到元素默认用fill_value </td>
+<td>元素级相加，对齐时找不到元素默认用fill_value </td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.sub(df2, fill_value=NaN, axist=1)</td>
-<td>元素级相减，对齐时找不到元素默认用fill_value </td>
+<td>元素级相减，对齐时找不到元素默认用fill_value </td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.div(df2, fill_value=NaN, axist=1)</td>
-<td>元素级相除，对齐时找不到元素默认用fill_value </td>
+<td>元素级相除，对齐时找不到元素默认用fill_value </td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.mul(df2, fill_value=NaN, axist=1)</td>
-<td>元素级相乘，对齐时找不到元素默认用fill_value </td>
+<td>元素级相乘，对齐时找不到元素默认用fill_value </td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.apply(f, axis=0)</td>
 <td>将f函数应用到由各行各列所形成的一维数组上</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.applymap(f)</td>
 <td>将f函数应用到各个元素上</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.cumsum(axis=0, skipna=True)</td>
 <td>累加，返回累加后的dataframe</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>索引方式</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>df[val]</td>
 <td>选取DataFrame的单个列或一组列</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.ix[val]</td>
 <td>选取Dataframe的单个行或一组行</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>df.ix[:,val]</td>
 <td>选取单个列或列子集</td>
 </tr>
-<tr>
+<tr class="even">
 <td>df.ix[val1,val2]</td>
 <td>将一个或多个轴匹配到新索引</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>reindex方法</td>
 <td>将一个或多个轴匹配到新索引</td>
 </tr>
-<tr>
+<tr class="even">
 <td>xs方法</td>
 <td>根据标签选取单行或者单列，返回一个Series</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>icol、irow方法</td>
 <td>根据整数位置选取单列或单行，并返回一个Series</td>
 </tr>
-<tr>
+<tr class="even">
 <td>get_value、set_value</td>
 <td>根据行标签和列标签选取单个值</td>
 </tr>
 </tbody>
 </table>
-</div>
-<h4 id="Dataframe常用索引方式"><a href="#Dataframe常用索引方式" class="headerlink" title="Dataframe常用索引方式"></a>Dataframe常用索引方式</h4><p>运算：<br>默认情况下，Dataframe和Series之间的算术运算会将Series的索引匹配到的Dataframe的列，沿着列一直向下传播。若索引找不到，则会重新索引产生并集。<br>D.Index<br>pandas的索引对象负责管理轴标签和其他元数据（比如轴名称等）。构建Series或DataFrame时，所用到的任何数组或其他序列的标签都会被转换成一个Index。Index对象不可修改，从而在多个数据结构之间安全共享。</p>
-<div class="table-container">
+<h4 id="dataframe常用索引方式">Dataframe常用索引方式</h4>
+<p>运算： 默认情况下，Dataframe和Series之间的算术运算会将Series的索引匹配到的Dataframe的列，沿着列一直向下传播。若索引找不到，则会重新索引产生并集。 D.Index pandas的索引对象负责管理轴标签和其他元数据（比如轴名称等）。构建Series或DataFrame时，所用到的任何数组或其他序列的标签都会被转换成一个Index。Index对象不可修改，从而在多个数据结构之间安全共享。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Index对象</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Index</td>
 <td>最广泛的Index对象，将轴标签表示为一个由Python对象组成的NumPy数组</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Int64Index</td>
 <td>针对整数的特殊Index</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>MultiIndex</td>
 <td>“层次化”索引对象，表示单个轴上的多层索引。可以看做由元组组成的数组</td>
 </tr>
-<tr>
+<tr class="even">
 <td>DatetimeIndex</td>
 <td>存储纳秒级时间戳（用NumPy的Datetime64类型表示）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>PeriodIndex</td>
 <td>针对Period数据（时间间隔）的特殊Index</td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="table-container">
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Index属性</th>
 <th>说明</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>Index([x,y,…])</td>
+<tr class="odd">
+<td>Index([x,y,...])</td>
 <td>创建索引</td>
 </tr>
-<tr>
+<tr class="even">
 <td>append(Index)</td>
 <td>连接另一个Index对象，产生一个新的Index</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>diff(Index)</td>
 <td>计算差集，产生一个新的Index</td>
 </tr>
-<tr>
+<tr class="even">
 <td>intersection(Index)</td>
 <td>计算交集</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>union(Index)</td>
 <td>计算并集</td>
 </tr>
-<tr>
+<tr class="even">
 <td>isin(Index)</td>
 <td>检查是否存在与参数索引中，返回bool型数组</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>delete(i)</td>
 <td>删除索引i处元素，得到新的Index</td>
 </tr>
-<tr>
+<tr class="even">
 <td>drop(str)</td>
 <td>删除传入的值，得到新Index</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>insert(i,str)</td>
 <td>将元素插入到索引i处，得到新Index</td>
 </tr>
-<tr>
+<tr class="even">
 <td>is_monotonic()</td>
 <td>当各元素大于前一个元素时，返回true</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>is_unique()</td>
 <td>当Index没有重复值时，返回true</td>
 </tr>
-<tr>
+<tr class="even">
 <td>unique()</td>
 <td>计算Index中唯一值的数组</td>
 </tr>
 </tbody>
 </table>
-</div>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
