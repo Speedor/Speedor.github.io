@@ -164,12 +164,53 @@
 <p>       对于各种语言来说底层是绕不开词法、语法、语义的编译原理的，但是自底向上捋的方式又让大部分人头痛脑壳晕，所以选择了一自顶向下的方式来描述，这样可能让大多数人更好理解一点儿，我们开始吧</p>
 <hr>
 <h4 id="python一切皆对象">Python一切皆对象</h4>
-<p>       “一切皆对象”应该是所有接触Python的人都知道的，这个“对象”是怎么实现的呢？记住<font color="#000"><b>PyObject</b></font>这个东西，就是这个对象。</p>
+<p>       “一切皆对象”应该是所有接触Python的人都知道的，这个“对象”是怎么实现的呢？记住<font color="#000"><b>PyObject</b></font>这个东西，就是这个对象（PyVarObject是对PyObject的一个扩展）。</p>
 <div class="figure">
 <img src="/images/Python_1.jpg">
 
 </div>
-<p>PyVarObject是对PyObject的一个扩展</p>
+<p>       上边这段代码是从Python源码中截的图，看源码时当然要有源码目录啦：</p>
+<div class="figure">
+<img src="/images/Python_2.jpg">
+
+</div>
+<p>Python2.7主要目录：</p>
+<ul>
+<li>Include:包含了Python提供的所有头文件，用户需要用C或C++自定义自己的的扩展模块，那就要用这里提供的头文件。</li>
+<li>Lib:包含了Python自带的所有标准库，Lib中的库都是用Python语言编写。</li>
+<li>Modules:包含所有用C编写的对速度要求非常严格的模块，例random，而其他对速度没有太严格要求的比如os模块就是用Python编写并放在Lib目录下。</li>
+<li>Parser:包含<b>Python解释器</b>中的Scanner和Parser部分，即对Python代码进行<b>词法分析和语法分析</b>的部分。</li>
+<li>Objects:包含Python所有的内建对象（包括整数、list、dict等）以及运行时需要的所有的内部使用对象的实现。</li>
+<li>Python:包含Python解释器中Compiler和执行引擎部分，是<b>Python运行核心</b>。</li>
+</ul>
+<p>       在上边这些主要目录中，我们可以根据自己的实际情况学习，毕竟Python中核心还是要一步一步来学的，PyObject在哪我就不说了（大家自己找找看，找不到的话继续往下看）</p>
+<p>       回到PyObject，在Python内部，每一个对象都拥有相同的对象头部，也就使得对对象的引用变得非常的统一，我们<font color="#000"><b>只需要用一个PyObject* 指针就可以引用任意的一个对象，而不论该对象实际是一个什么对象</b></font>。因为PyVarObject只是对PyObject的一个扩展，对于任何一个PyVarObject所占用的内存，开始部分的字节的意义和PyObject是一样的。这两个结构体里面的两个变量，其实都是些宏。从源中我们可以找到这些宏的展开： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* PyObject_HEAD */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* PyObject_HEAD defines the initial segment of every PyObject. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PyObject_HEAD                   \</span></span><br><span class="line">    _PyObject_HEAD_EXTRA                \</span><br><span class="line">    Py_ssize_t ob_refcnt;               \</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">typeobject</span> *<span class="title">ob_type</span>;</span> <span class="comment">/* 画重点了啊：ob_refcnt、ob_type、_typeobject */</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* PyObject_VAR_HEAD */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* PyObject_VAR_HEAD defines the initial segment of all variable-size</span></span><br><span class="line"><span class="comment"> * container objects.  These end with a declaration of an array with 1</span></span><br><span class="line"><span class="comment"> * element, but enough space is malloc'ed so that the array actually</span></span><br><span class="line"><span class="comment"> * has room for ob_size elements.  Note that ob_size is an element count,</span></span><br><span class="line"><span class="comment"> * not necessarily a byte count.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PyObject_VAR_HEAD               \</span></span><br><span class="line">    PyObject_HEAD                       \</span><br><span class="line">    Py_ssize_t ob_size; <span class="comment">/* Number of items in variable part */</span></span><br></pre></td></tr></table></figure>
+<p>       实际上不难看出：PyObject_VAR_HEAD就是在PyObject的基础上，多了一个ob_size变量，用以标识对象的长度（是长度，不是内存占用）。也就是上边说的PyVarObject就是PyObject的一个扩展，于是在Python中，所有的对象都可以通过PyObject*指针来引用，使得很多操作变得统一（函数参数传递等）。</p>
+<p>       是否想到以前刚开始学习Python时接触的<font color="#f00"><b>可变对象和不可变对象</b></font>的概念？</p>
+<hr>
+<p>       一切皆对象的原因找到了，那Python实际应用中的Int类型、String类型、List类型、Dict类型等，他们又是怎么实现的呢？其实他们在Python中分别被定义为PyIntObject（Int形）、PyStringObject（String型）、PyListObject（List型）、PyDictObject（Dict型）等，其他成千上万的对象都是PyObject扩展属性。</p>
+<div class="figure">
+<img src="/images/Python_3.jpg">
+
+</div>
+<p>       看到这儿你应该明白了吧？PyObject_HEAD和PyObject_VAR_HEAD实际就是<font color="#f00"><b>不可变对象和可变对象</b></font>的真正区别。是不是对图中（引用于《Python源码剖析》）的ob_refcnt、ob_type参数有点儿眼熟？他们就是前边PyObject_HEAD的宏展开的参数，参数作用如下：</p>
+<ul>
+<li><font color="#000"><b>ob_refcnt</b></font>: 每个PyObject中都有一个ob_refcnt来计数当前对象被引用的次数<font color="#0f0"><b>（GC机制中的引用计数）</b></font></li>
+<li><font color="#000"><b>ob_type</b></font>: 指向 _typeobject 指针ob_type，这个结构体用于表示<b>对象类型</b>。</li>
+</ul>
+<p>       还有一个参数是_typeobject。想一想一个对象在创建的时候需要多少内存、这个对象的类名是什么等等信息，又是如何记录和区分的呢？_typeobject（也就是PyTypeObject）可以被称：<b>指定对象类型的类型对象</b></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">typeobject</span> &#123;</span></span><br><span class="line">    PyObject_VAR_HEAD</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *tp_name; <span class="comment">/* For printing, in format "&lt;module&gt;.&lt;name&gt;" */</span></span><br><span class="line">    Py_ssize_t tp_basicsize, tp_itemsize; <span class="comment">/* For allocation */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Methods to implement standard operations */</span></span><br><span class="line"></span><br><span class="line">    destructor tp_dealloc;</span><br><span class="line">    printfunc tp_print;</span><br><span class="line">    getattrfunc tp_getattr;</span><br><span class="line">    setattrfunc tp_setattr;</span><br><span class="line">    cmpfunc tp_compare;</span><br><span class="line">    reprfunc tp_repr;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Method suites for standard classes */</span></span><br><span class="line"></span><br><span class="line">    PyNumberMethods *tp_as_number;</span><br><span class="line">    PySequenceMethods *tp_as_sequence;</span><br><span class="line">    PyMappingMethods *tp_as_mapping;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ******************这里很多内容因篇幅被省略*</span></span><br><span class="line"></span><br><span class="line">&#125; PyTypeObject;</span><br></pre></td></tr></table></figure>
+<p>       _typeobject存储了大量的信息，里面的每条信息被称为一个元信息，他们被用来支持对象地操作，例如：</p>
+<ul>
+<li>tp_name:类型名称</li>
+<li>tp_basicsize,tp_itemsize:创建类型对象时分配的内存大小信息。</li>
+<li>其他：对象操作（函数指针）</li>
+</ul>
+<p>       当然这只是一部分，还有其他更多的操作有兴趣的童鞋可以深入了解。</p>
+<p>       《Python源码剖析》将PyIntObject（Int形）、PyStringObject（String型）、PyListObject（List型）、PyDictObject（Dict型）等一系列类型分章节都描述的很清楚，还有其他例如NameSpace、import、PyCodeObject、线程实现等都写得很详细，当然啦刷一遍想搞清这些还是要点时间的，后续有时间还会再刷的，跟着看源码不仅让自己对Python更加深入，而且对平常编程熟练应用也是有好处的，推荐大家有时间看一看。对了，上边的C代码都在./Include/object.h下，大家可以自己去学习啦。</p>
+<h4 id="参考">参考</h4>
+<p>https://www.zhihu.com/question/38791962?sort=created</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
