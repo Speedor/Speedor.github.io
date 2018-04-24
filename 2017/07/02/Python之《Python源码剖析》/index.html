@@ -17,7 +17,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Python之《Python源码剖析》 | 白柏翁</title>
+  <title>Python之Python源码剖析 | 白柏翁</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -156,11 +156,20 @@
       </time>
     
 </span>
-                <h1>Python之《Python源码剖析》</h1>
+                <h1>Python之Python源码剖析</h1>
             </div>
         </div>
         <div class="col-md-8 col-md-offset-2">
-      		
+      		<p>       闲着无聊看了看《Python源码剖析》这本书，虽然这本书已经出版很多年了Python（CPython）的版本也是当时2.5的版本，但是2.7以及3.x都是从2.5一步一步走过来的，对我们研究Python思想的影响并不是很大。一刷看的不是特别仔细但是对Python的机制也收获了不少，当然了对于Python思想的学习还要继续，这里主要贴出一些自己收获的知识点把个人在学习过程中主观理解描述出来，以供大家学习参考，当然有路过的大牛可以帮我看一看，不对的地方请大家指正，谢谢～～</p>
+<p>       对于各种语言来说底层是绕不开词法、语法、语义的编译原理的，但是自底向上捋的方式又让大部分人头痛脑壳晕，所以选择了一自顶向下的方式来描述，这样可能让大多数人更好理解一点儿，我们开始吧</p>
+<hr>
+<h4 id="python一切皆对象">Python一切皆对象</h4>
+<p>       “一切皆对象”应该是所有接触Python的人都知道的，这个“对象”是怎么实现的呢？记住<font color="#000"><b>PyObject</b></font>这个东西，就是这个对象。</p>
+<div class="figure">
+<img src="/images/Python_1.jpg">
+
+</div>
+<p>PyVarObject是对PyObject的一个扩展</p>
 
             <div class="clearfix"></div>
             <hr class="nogutter">
